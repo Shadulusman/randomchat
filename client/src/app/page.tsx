@@ -100,7 +100,7 @@ export default function Home() {
             Terms of Service
           </Link>
         </div>
-        <p>&copy; {new Date().getFullYear()} RandomChat. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Omeelo. All rights reserved.</p>
       </footer>
     </main>
   );

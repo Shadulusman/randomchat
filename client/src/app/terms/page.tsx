@@ -13,7 +13,7 @@ export default function TermsPage() {
           <div>
             <h2 className="text-xl font-semibold text-white mb-2">1. Acceptance</h2>
             <p>
-              By accessing or using RandomChat you agree to be bound by these terms. If you do not
+              By accessing or using Omeelo you agree to be bound by these terms. If you do not
               agree, do not use the service.
             </p>
           </div>
@@ -21,7 +21,7 @@ export default function TermsPage() {
           <div>
             <h2 className="text-xl font-semibold text-white mb-2">2. Eligibility</h2>
             <p>
-              You must be at least <strong>18 years old</strong> to use RandomChat. By using the
+              You must be at least <strong>18 years old</strong> to use Omeelo. By using the
               service you confirm that you meet this requirement.
             </p>
           </div>
@@ -42,7 +42,7 @@ export default function TermsPage() {
           <div>
             <h2 className="text-xl font-semibold text-white mb-2">4. User Conduct</h2>
             <p>
-              You are solely responsible for your behaviour during video chats. RandomChat reserves
+              You are solely responsible for your behaviour during video chats. Omeelo reserves
               the right to ban users who violate these terms without notice.
             </p>
           </div>
@@ -58,7 +58,7 @@ export default function TermsPage() {
           <div>
             <h2 className="text-xl font-semibold text-white mb-2">6. Disclaimer</h2>
             <p>
-              RandomChat is provided &quot;as is&quot; without warranties of any kind. We do not
+              Omeelo is provided &quot;as is&quot; without warranties of any kind. We do not
               guarantee the behaviour of other users and are not liable for any interactions that
               occur on the platform.
             </p>
@@ -84,7 +84,7 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold text-white mb-2">9. Contact</h2>
             <p>
               Questions about these terms can be directed to{' '}
-              <span className="text-violet-400">legal@randomchat.com</span>.
+              <span className="text-violet-400">legal@omeelo.com</span>.
             </p>
           </div>
         </section>

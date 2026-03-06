@@ -5,9 +5,9 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'RandomChat – Meet Strangers via Video',
+  title: 'Omeelo – Meet Strangers via Video',
   description:
-    'Connect instantly with random people around the world through live video chat. No sign-up required.',
+    'Connect instantly with random people around the world through live video chat. No sign-up required. The modern Omegle alternative.',
 };
 
 export default function RootLayout({

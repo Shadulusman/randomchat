@@ -247,7 +247,7 @@ export default function ChatPage() {
       {/* Top Bar */}
       <header className="flex items-center justify-between px-4 h-14 border-b border-white/5 shrink-0">
         <Link href="/" className="text-lg font-bold gradient-text">
-          RandomChat
+          Omeelo
         </Link>
         <div className="flex items-center gap-2">
           {status === 'connected' && (

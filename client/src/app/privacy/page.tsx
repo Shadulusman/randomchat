@@ -13,7 +13,7 @@ export default function PrivacyPage() {
           <div>
             <h2 className="text-xl font-semibold text-white mb-2">1. Information We Collect</h2>
             <p>
-              RandomChat is designed to be anonymous. We do <strong>not</strong> require you to
+              Omeelo is designed to be anonymous. We do <strong>not</strong> require you to
               create an account or provide any personal information. When you use our service we may
               temporarily process:
             </p>
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
           <div>
             <h2 className="text-xl font-semibold text-white mb-2">6. Children</h2>
             <p>
-              RandomChat is intended for users aged 18 and older. We do not knowingly collect
+              Omeelo is intended for users aged 18 and older. We do not knowingly collect
               information from anyone under 18.
             </p>
           </div>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-semibold text-white mb-2">7. Contact</h2>
             <p>
               If you have questions about this privacy policy, please contact us at{' '}
-              <span className="text-violet-400">privacy@randomchat.com</span>.
+              <span className="text-violet-400">privacy@omeelo.com</span>.
             </p>
           </div>
         </section>
