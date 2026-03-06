@@ -6,15 +6,26 @@ const cors = require('cors');
 const app = express();
 const server = http.createServer(app);
 
-// Configure Socket.io with CORS for the frontend
+// Allow all frontend domains (Vercel, custom domain, localhost)
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://randomchat-omega.vercel.app',
+  'https://omeelo.com',
+  'https://www.omeelo.com',
+];
+
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
+
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
   },
 });
 
-app.use(cors());
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // ──────────────────────────────────────────────
