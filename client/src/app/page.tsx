@@ -21,49 +21,43 @@ export default function Home() {
     <main className="min-h-screen bg-[#0a0a0f]">
       <Navbar />
 
-      {/* ── Hero Section with Floating Profile Background ── */}
-      <section className="relative min-h-[100dvh] overflow-hidden">
-        {/* Animated profile cards as background */}
-        <AvatarMarquee />
+      {/* ── Hero Section ── */}
+      <section className="relative flex flex-col items-center justify-center text-center px-4 pt-32 pb-20 overflow-hidden">
+        <div className="absolute top-20 left-1/4 w-72 h-72 bg-violet-600/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-10 right-1/4 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px]" />
 
-        {/* Dark overlay so text is readable */}
-        <div className="absolute inset-0 z-[1] bg-[#0a0a0f]/60" />
+        <div className="relative z-10 max-w-3xl">
+          <h1 className="text-5xl sm:text-6xl font-extrabold leading-tight mb-6">
+            Free Random <span className="gradient-text">Video Chat</span> <br />
+            With Strangers
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-400 mb-10 max-w-xl mx-auto">
+            Omeelo connects you instantly with random people from around the world
+            through live video. No sign-up. No profiles. The best Omegle alternative.
+          </p>
 
-        {/* Radial vignette: dark edges, lighter center */}
-        <div className="absolute inset-0 z-[2]" style={{
-          background: 'radial-gradient(ellipse at center, transparent 20%, #0a0a0f 75%)',
-        }} />
+          <Link
+            href="/chat"
+            className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white text-lg font-semibold px-8 py-4 rounded-xl transition-all hover:scale-105 shadow-lg shadow-violet-600/25"
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Start Chatting — It&apos;s Free
+          </Link>
 
-        {/* Hero content on top */}
-        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 pt-32 pb-20 min-h-[100dvh]">
-          <div className="max-w-3xl">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 drop-shadow-2xl">
-              Free Random <span className="gradient-text">Video Chat</span> <br />
-              With Strangers
-            </h1>
-            <p className="text-lg sm:text-xl text-gray-300 mb-10 max-w-xl mx-auto drop-shadow-lg">
-              Omeelo connects you instantly with random people from around the world
-              through live video. No sign-up. No profiles. The best Omegle alternative.
+          {onlineCount !== null && (
+            <p className="mt-6 text-sm text-gray-500">
+              <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
+              <strong className="text-green-400">{onlineCount}</strong> {onlineCount === 1 ? 'person' : 'people'} online right now
             </p>
-
-            <Link
-              href="/chat"
-              className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white text-lg font-semibold px-8 py-4 rounded-xl transition-all hover:scale-105 shadow-lg shadow-violet-600/25"
-            >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-              Start Chatting — It&apos;s Free
-            </Link>
-
-            {onlineCount !== null && (
-              <p className="mt-6 text-sm text-gray-400">
-                <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
-                <strong className="text-green-400">{onlineCount}</strong> {onlineCount === 1 ? 'person' : 'people'} online right now
-              </p>
-            )}
-          </div>
+          )}
         </div>
+      </section>
+
+      {/* ── Animated Profile Marquee ── */}
+      <section className="pb-16 -mt-4">
+        <AvatarMarquee />
       </section>
 
       {/* ── How It Works ── */}
