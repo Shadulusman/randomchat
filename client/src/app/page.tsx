@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Logo from '@/components/Logo';
+import AvatarMarquee from '@/components/AvatarMarquee';
 
 export default function Home() {
   const [onlineCount, setOnlineCount] = useState<number | null>(null);
@@ -52,6 +53,11 @@ export default function Home() {
             </p>
           )}
         </div>
+      </section>
+
+      {/* ── Animated Profile Marquee ── */}
+      <section className="pb-16 -mt-4">
+        <AvatarMarquee />
       </section>
 
       {/* ── How It Works ── */}
