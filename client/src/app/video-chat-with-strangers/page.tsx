@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import Logo from '@/components/Logo';
 
 export const metadata: Metadata = {
   title: 'Video Chat with Strangers | Omeelo',
@@ -406,6 +407,10 @@ export default function VideoChatWithStrangersPage() {
           <Link href="/terms" className="hover:text-white transition-colors">
             Terms of Service
           </Link>
+        </div>
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <Logo size={24} />
+          <span className="font-bold gradient-text text-base">Omeelo</span>
         </div>
         <p>&copy; {new Date().getFullYear()} Omeelo. All rights reserved.</p>
       </footer>

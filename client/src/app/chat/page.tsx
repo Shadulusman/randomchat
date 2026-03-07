@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { io, Socket } from 'socket.io-client';
+import Logo from '@/components/Logo';
 
 // ─── Constants ───────────────────────────────
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001';
@@ -260,7 +261,8 @@ export default function ChatPage() {
 
       {/* ── Top Header ── */}
       <header className="flex items-center justify-between px-3 py-2 shrink-0 bg-[#0a0a0f] border-b border-white/10 z-10">
-        <Link href="/" className="text-lg font-bold gradient-text">
+        <Link href="/" className="flex items-center gap-1.5 text-lg font-bold gradient-text">
+          <Logo size={24} />
           Omeelo
         </Link>
         <div className="flex items-center gap-2">

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Logo from '@/components/Logo';
 
 export default function Home() {
   const [onlineCount, setOnlineCount] = useState<number | null>(null);
@@ -252,6 +253,10 @@ export default function Home() {
 
       {/* ── Footer ── */}
       <footer className="border-t border-white/5 py-8 text-center text-sm text-gray-500">
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <Logo size={24} />
+          <span className="font-bold gradient-text text-base">Omeelo</span>
+        </div>
         <div className="flex flex-wrap justify-center gap-6 mb-4">
           <Link href="/random-video-chat" className="hover:text-white transition-colors">Random Video Chat</Link>
           <Link href="/omegle-alternative" className="hover:text-white transition-colors">Omegle Alternative</Link>

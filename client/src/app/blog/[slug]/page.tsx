@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
+import Logo from '@/components/Logo';
 import { blogPosts } from '@/data/blog-posts';
 
 /* ── Static params for SSG ── */
@@ -203,6 +204,10 @@ export default function BlogPostPage({
           <Link href="/terms" className="hover:text-white transition-colors">
             Terms of Service
           </Link>
+        </div>
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <Logo size={24} />
+          <span className="font-bold gradient-text text-base">Omeelo</span>
         </div>
         <p>&copy; {new Date().getFullYear()} Omeelo. All rights reserved.</p>
       </footer>
