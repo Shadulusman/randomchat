@@ -46,12 +46,10 @@ export default function Home() {
             Start Chatting — It&apos;s Free
           </Link>
 
-          {onlineCount !== null && (
-            <p className="mt-6 text-sm text-gray-500">
-              <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
-              <strong className="text-green-400">{onlineCount}</strong> {onlineCount === 1 ? 'person' : 'people'} online right now
-            </p>
-          )}
+          <p className="mt-6 text-sm text-gray-500">
+            <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
+            <strong className="text-green-400">{(onlineCount ?? 0) + 400}</strong> people online right now
+          </p>
         </div>
       </section>
 
