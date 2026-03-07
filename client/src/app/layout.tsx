@@ -32,11 +32,20 @@ export const metadata: Metadata = {
     siteName: 'Omeelo',
     type: 'website',
     locale: 'en_US',
+    images: [
+      {
+        url: 'https://omeelo.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Omeelo – Free Random Video Chat',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Omeelo – Free Random Video Chat',
     description: 'Talk to strangers from around the world via live video. No sign-up required.',
+    images: ['https://omeelo.com/og-image.png'],
   },
   alternates: {
     canonical: 'https://omeelo.com',
