@@ -107,18 +107,24 @@ function tryMatch(socketId) {
   const userData = users.get(socketId);
   if (!userData) return;
 
+  // Count how many people are in the queue (excluding self)
+  const queuedOthers = waitingQueue.filter((id) => id !== socketId).length;
+
   for (let i = 0; i < waitingQueue.length; i++) {
     const candidateId = waitingQueue[i];
 
     // Skip self
     if (candidateId === socketId) continue;
 
-    // Avoid re-pairing with someone you just chatted with
-    if (userData.recentPartners.includes(candidateId)) continue;
-
     const candidateData = users.get(candidateId);
     if (!candidateData) continue;
-    if (candidateData.recentPartners.includes(socketId)) continue;
+
+    // Only avoid recent partners when there are enough people online
+    // (with < 5 people in queue, allow rematching so the site stays usable)
+    if (queuedOthers >= 5) {
+      if (userData.recentPartners.includes(candidateId)) continue;
+      if (candidateData.recentPartners.includes(socketId)) continue;
+    }
 
     // ── Match found ──
     waitingQueue.splice(i, 1);
@@ -192,8 +198,16 @@ io.on('connection', (socket) => {
 
   // ── Skip to next user ──
   socket.on('skip', () => {
+    const userData = users.get(socket.id);
+    const partnerId = userData?.partnerId;
+
     disconnectPartner(socket.id);
     tryMatch(socket.id);
+
+    // Auto re-queue the skipped partner so they don't have to reload
+    if (partnerId && users.has(partnerId)) {
+      tryMatch(partnerId);
+    }
   });
 
   // ── Stop chatting (go back to idle) ──
@@ -205,9 +219,17 @@ io.on('connection', (socket) => {
   // ── Disconnect ──
   socket.on('disconnect', () => {
     console.log(`- disconnected: ${socket.id}`);
+    const userData = users.get(socket.id);
+    const partnerId = userData?.partnerId;
+
     removeFromQueue(socket.id);
     disconnectPartner(socket.id);
     users.delete(socket.id);
+
+    // Auto re-queue the remaining partner so they auto-search for someone new
+    if (partnerId && users.has(partnerId)) {
+      tryMatch(partnerId);
+    }
   });
 });
 

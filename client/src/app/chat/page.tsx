@@ -11,6 +11,22 @@ const ICE_CONFIG: RTCConfiguration = {
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' },
     { urls: 'stun:stun1.l.google.com:19302' },
+    // TURN relay servers — needed for restrictive networks (UAE, corporate, etc.)
+    {
+      urls: 'turn:openrelay.metered.ca:80',
+      username: 'openrelayproject',
+      credential: 'openrelayproject',
+    },
+    {
+      urls: 'turn:openrelay.metered.ca:443',
+      username: 'openrelayproject',
+      credential: 'openrelayproject',
+    },
+    {
+      urls: 'turn:openrelay.metered.ca:443?transport=tcp',
+      username: 'openrelayproject',
+      credential: 'openrelayproject',
+    },
   ],
 };
 
@@ -159,7 +175,9 @@ export default function ChatPage() {
     socket.on('partner-disconnected', () => {
       closePeer();
       partnerIdRef.current = null;
-      setStatus('disconnected');
+      setMessages([]);
+      // Auto-search for next partner (server already re-queued us)
+      setStatus('waiting');
     });
 
     socket.on('banned', () => {
