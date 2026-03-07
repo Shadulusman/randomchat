@@ -238,13 +238,43 @@ export default function ChatPage() {
 
   // ─── Render ────────────────────────────────
   return (
-    <div className="h-[100dvh] flex flex-col bg-[#0a0a0f] overflow-hidden">
+    <div className="h-[100dvh] flex flex-col bg-[#0a0a0f] overflow-hidden relative">
 
-      {/* ── Video Area: 50/50 split ── */}
-      <div className="flex-1 flex flex-col md:flex-row min-h-0">
+      {/* ── Top Header ── */}
+      <header className="flex items-center justify-between px-3 py-2 shrink-0 bg-[#0a0a0f] border-b border-white/10 z-10">
+        <Link href="/" className="text-lg font-bold gradient-text">
+          Omeelo
+        </Link>
+        <div className="flex items-center gap-2">
+          {status === 'connected' && (
+            <span className="text-xs text-green-400 flex items-center gap-1 mr-1">
+              <span className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+              Connected
+            </span>
+          )}
+          {status === 'waiting' && (
+            <span className="text-xs text-yellow-400 flex items-center gap-1 mr-1">
+              <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse" />
+              Searching
+            </span>
+          )}
+          {status === 'connected' && (
+            <button
+              onClick={reportUser}
+              disabled={reported}
+              className="bg-red-600 hover:bg-red-500 disabled:opacity-30 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
+            >
+              Report
+            </button>
+          )}
+        </div>
+      </header>
 
-        {/* Remote Video (Stranger) — left / top half */}
-        <div className="flex-1 relative bg-[#111118] border-b md:border-b-0 md:border-r border-white/10 flex items-center justify-center">
+      {/* ── Video Area: forced 50/50 ── */}
+      <div className="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden">
+
+        {/* Remote Video (Stranger) — top on mobile, left on desktop */}
+        <div className="basis-1/2 shrink-0 grow-0 md:basis-auto md:flex-1 relative bg-[#111118] border-b md:border-b-0 md:border-r border-white/10 flex items-center justify-center overflow-hidden">
           <video
             ref={remoteVideoRef}
             autoPlay
@@ -254,86 +284,69 @@ export default function ChatPage() {
 
           {/* Stranger label */}
           {status === 'connected' && (
-            <span className="absolute top-3 left-3 text-xs bg-black/60 text-gray-300 px-2 py-1 rounded">
+            <span className="absolute top-2 left-2 text-[10px] bg-black/60 text-gray-300 px-2 py-0.5 rounded">
               Stranger
             </span>
           )}
 
-          {/* Report button - top right */}
-          {status === 'connected' && (
-            <button
-              onClick={reportUser}
-              disabled={reported}
-              className="absolute top-3 right-3 bg-red-600 hover:bg-red-500 disabled:opacity-30 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
-            >
-              Report
-            </button>
-          )}
-
-          {/* Overlay states */}
+          {/* Overlay: idle */}
           {status === 'idle' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111118]">
-              <svg className="w-16 h-16 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111118] px-4">
+              <svg className="w-12 h-12 text-gray-600 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
-              <p className="text-gray-400 text-lg mb-4">Ready to meet someone new?</p>
+              <p className="text-gray-400 text-sm mb-3">No partner connected</p>
               <button
                 onClick={findMatch}
                 disabled={!!cameraError}
-                className="bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white font-semibold px-8 py-3 rounded-xl transition-all hover:scale-105"
+                className="bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all hover:scale-105 flex items-center gap-2"
               >
-                Start Chatting
+                Start Matching
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </button>
               {cameraError && (
-                <p className="text-red-400 text-sm mt-4 max-w-xs text-center">{cameraError}</p>
+                <p className="text-red-400 text-xs mt-3 text-center">{cameraError}</p>
               )}
             </div>
           )}
 
+          {/* Overlay: waiting */}
           {status === 'waiting' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111118]">
-              <div className="relative mb-6">
-                <div className="w-16 h-16 bg-violet-600/30 rounded-full animate-pulse-ring absolute" />
-                <div className="w-16 h-16 bg-violet-600 rounded-full flex items-center justify-center relative">
-                  <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111118] px-4">
+              <div className="relative mb-4">
+                <div className="w-12 h-12 bg-violet-600/30 rounded-full animate-pulse-ring absolute" />
+                <div className="w-12 h-12 bg-violet-600 rounded-full flex items-center justify-center relative">
+                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
               </div>
-              <p className="text-gray-300 text-lg mb-2">Looking for someone...</p>
-              <p className="text-gray-500 text-sm">This usually takes a few seconds</p>
-              <button
-                onClick={endChat}
-                className="mt-6 text-sm text-gray-400 hover:text-white transition-colors"
-              >
-                Cancel
-              </button>
+              <p className="text-gray-300 text-sm mb-1">Looking for someone...</p>
+              <p className="text-gray-500 text-xs">This usually takes a few seconds</p>
             </div>
           )}
 
+          {/* Overlay: disconnected */}
           {status === 'disconnected' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111118]">
-              <p className="text-gray-300 text-lg mb-4">Stranger disconnected</p>
-              <div className="flex gap-3">
-                <button
-                  onClick={findMatch}
-                  className="bg-violet-600 hover:bg-violet-500 text-white font-semibold px-6 py-3 rounded-xl transition-all"
-                >
-                  Find Next
-                </button>
-                <button
-                  onClick={endChat}
-                  className="border border-white/10 hover:border-white/20 text-gray-300 px-6 py-3 rounded-xl transition-all"
-                >
-                  Stop
-                </button>
-              </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111118] px-4">
+              <p className="text-gray-300 text-sm mb-3">Stranger disconnected</p>
+              <button
+                onClick={findMatch}
+                className="bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all flex items-center gap-2"
+              >
+                Start Matching
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           )}
         </div>
 
-        {/* Local Video (You) — right / bottom half */}
-        <div className="flex-1 relative bg-[#111118] flex items-center justify-center">
+        {/* Local Video (You) — bottom on mobile, right on desktop */}
+        <div className="basis-1/2 shrink-0 grow-0 md:basis-auto md:flex-1 relative bg-[#111118] flex items-center justify-center overflow-hidden">
           <video
             ref={localVideoRef}
             autoPlay
@@ -341,38 +354,31 @@ export default function ChatPage() {
             muted
             className="w-full h-full object-cover mirror"
           />
-          <span className="absolute top-3 left-3 text-xs bg-black/60 text-gray-300 px-2 py-1 rounded">
+          <span className="absolute top-2 left-2 text-[10px] bg-black/60 text-gray-300 px-2 py-0.5 rounded">
             You
           </span>
         </div>
       </div>
 
-      {/* ── Floating Chat Box (bottom-right corner) ── */}
+      {/* ── Floating Chat Box ── */}
       {showChat && (
-        <div className="absolute bottom-20 right-3 w-80 max-w-[calc(100vw-24px)] h-80 bg-[#111118]/95 backdrop-blur-md border border-white/10 rounded-2xl flex flex-col shadow-2xl z-50">
-          {/* Chat header */}
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
-            <h3 className="font-semibold text-sm text-white">Chat Box</h3>
-            <button
-              onClick={() => setShowChat(false)}
-              className="text-gray-400 hover:text-white transition-colors"
-            >
+        <div className="absolute bottom-16 right-2 w-72 max-w-[calc(100vw-16px)] h-72 bg-[#111118]/95 backdrop-blur-md border border-white/10 rounded-2xl flex flex-col shadow-2xl z-50">
+          <div className="flex items-center justify-between px-3 py-2 border-b border-white/10">
+            <h3 className="font-semibold text-xs text-white">Chat Box</h3>
+            <button onClick={() => setShowChat(false)} className="text-gray-400 hover:text-white">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
-
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-3 space-y-2 hide-scrollbar">
-            {messages.length === 0 && status === 'connected' && (
-              <p className="text-gray-500 text-xs text-center mt-6">Say hello!</p>
-            )}
-            {messages.length === 0 && status !== 'connected' && (
-              <p className="text-gray-500 text-xs text-center mt-6">Connect to start chatting</p>
+          <div className="flex-1 overflow-y-auto p-2.5 space-y-1.5 hide-scrollbar">
+            {messages.length === 0 && (
+              <p className="text-gray-500 text-xs text-center mt-4">
+                {status === 'connected' ? 'Say hello!' : 'Connect to chat'}
+              </p>
             )}
             {messages.map((m, i) => (
-              <div key={i} className="text-sm">
+              <div key={i} className="text-xs">
                 <span className={`font-semibold ${m.from === 'me' ? 'text-violet-400' : 'text-red-400'}`}>
                   {m.from === 'me' ? 'You' : 'Stranger'}
                 </span>
@@ -381,24 +387,22 @@ export default function ChatPage() {
             ))}
             <div ref={chatEndRef} />
           </div>
-
-          {/* Input */}
           <form onSubmit={sendMessage} className="p-2 border-t border-white/10">
-            <div className="flex gap-2">
+            <div className="flex gap-1.5">
               <input
                 type="text"
                 value={inputMsg}
                 onChange={(e) => setInputMsg(e.target.value)}
                 placeholder="Type your message..."
                 disabled={status !== 'connected'}
-                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 disabled:opacity-50"
+                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 disabled:opacity-50"
               />
               <button
                 type="submit"
                 disabled={status !== 'connected'}
-                className="bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white p-2 rounded-lg transition-colors"
+                className="bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white p-1.5 rounded-lg transition-colors"
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>
@@ -407,104 +411,55 @@ export default function ChatPage() {
         </div>
       )}
 
-      {/* ── Bottom Controls ── */}
-      <div className="flex items-center justify-between px-3 h-16 border-t border-white/10 shrink-0 bg-[#0a0a0f]">
+      {/* ── Bottom Controls: always visible END | controls | SKIP ── */}
+      <div className="flex items-center justify-center gap-2 px-3 py-2 shrink-0 bg-[#0a0a0f] border-t border-white/10 z-10">
+        {/* END */}
+        <button
+          onClick={status !== 'idle' ? endChat : () => window.location.href = '/'}
+          className="bg-red-600 hover:bg-red-500 text-white font-bold text-sm px-4 py-2 rounded-lg transition-colors"
+        >
+          END
+        </button>
 
-        {/* Left: END button */}
-        <div className="flex items-center gap-2">
-          {status !== 'idle' ? (
-            <button
-              onClick={endChat}
-              className="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2.5 rounded-lg transition-colors"
-            >
-              END
-            </button>
-          ) : (
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-gray-400 hover:text-white text-sm font-semibold transition-colors"
-            >
-              <span className="gradient-text text-lg font-bold">Omeelo</span>
-            </Link>
-          )}
-        </div>
-
-        {/* Center: Camera, Mic, Chat */}
-        <div className="flex items-center gap-2">
-          {/* Camera toggle */}
-          <button
-            onClick={toggleVideo}
-            className={`p-2.5 rounded-lg transition-colors ${
-              isVideoOff
-                ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
-                : 'bg-white/5 text-gray-300 hover:bg-white/10'
-            }`}
-            title={isVideoOff ? 'Turn on camera' : 'Turn off camera'}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              {isVideoOff ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              )}
-            </svg>
-          </button>
-
-          {/* Mic toggle */}
-          <button
-            onClick={toggleMute}
-            className={`p-2.5 rounded-lg transition-colors ${
-              isMuted
-                ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
-                : 'bg-white/5 text-gray-300 hover:bg-white/10'
-            }`}
-            title={isMuted ? 'Unmute' : 'Mute'}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              {isMuted ? (
-                <>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-                </>
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-              )}
-            </svg>
-          </button>
-
-          {/* Chat toggle */}
-          <button
-            onClick={() => setShowChat(!showChat)}
-            className={`flex items-center gap-1.5 px-3 py-2.5 rounded-lg transition-colors ${
-              showChat
-                ? 'bg-violet-600/20 text-violet-400'
-                : 'bg-white/5 text-gray-300 hover:bg-white/10'
-            }`}
-            title="Toggle chat"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            <span className="text-sm font-medium hidden sm:inline">Chat</span>
-            {messages.length > 0 && !showChat && (
-              <span className="w-2 h-2 bg-violet-500 rounded-full" />
+        {/* Camera */}
+        <button
+          onClick={toggleVideo}
+          className={`p-2 rounded-lg transition-colors ${
+            isVideoOff ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-gray-300'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {isVideoOff ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
             )}
-          </button>
-        </div>
+          </svg>
+        </button>
 
-        {/* Right: SKIP button */}
-        <div className="flex items-center gap-2">
-          {(status === 'connected' || status === 'waiting') ? (
-            <button
-              onClick={skipNext}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-2.5 rounded-lg transition-colors"
-            >
-              SKIP
-            </button>
-          ) : (
-            <div className="w-16" />
+        {/* Chat */}
+        <button
+          onClick={() => setShowChat(!showChat)}
+          className={`flex items-center gap-1 px-3 py-2 rounded-lg transition-colors text-sm ${
+            showChat ? 'bg-violet-600/20 text-violet-400' : 'bg-white/10 text-gray-300'
+          }`}
+        >
+          Chat
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+          {messages.length > 0 && !showChat && (
+            <span className="w-1.5 h-1.5 bg-violet-500 rounded-full" />
           )}
-        </div>
+        </button>
+
+        {/* SKIP */}
+        <button
+          onClick={skipNext}
+          className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm px-4 py-2 rounded-lg transition-colors"
+        >
+          SKIP
+        </button>
       </div>
     </div>
   );
