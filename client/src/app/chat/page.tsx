@@ -309,6 +309,11 @@ export default function ChatPage() {
             </span>
           )}
 
+          {/* Watermark */}
+          <span className="absolute bottom-2 right-2 text-[11px] text-white/40 font-semibold tracking-wide pointer-events-none select-none z-10">
+            omeelo.com
+          </span>
+
           {/* Overlay: idle */}
           {status === 'idle' && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111118] px-4">
