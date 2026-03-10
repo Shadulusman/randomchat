@@ -1,0 +1,14 @@
+{
+  "name": "Omeelo – Random Video Chat",
+  "short_name": "Omeelo",
+  "description": "Free random video chat with strangers. No sign-up required.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

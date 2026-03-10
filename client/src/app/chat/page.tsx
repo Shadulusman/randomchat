@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { io, Socket } from 'socket.io-client';
 import Logo from '@/components/Logo';
+import ShareButton from '@/components/ShareButton';
 
 // ─── Constants ───────────────────────────────
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001';
@@ -50,6 +51,8 @@ export default function ChatPage() {
   const [showChat, setShowChat] = useState(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [reported, setReported] = useState(false);
+  const [chatCount, setChatCount] = useState(0);
+  const [showSharePrompt, setShowSharePrompt] = useState(false);
 
   // Refs
   const localVideoRef = useRef<HTMLVideoElement>(null);
@@ -177,6 +180,14 @@ export default function ChatPage() {
       closePeer();
       partnerIdRef.current = null;
       setMessages([]);
+      setChatCount((prev) => {
+        const next = prev + 1;
+        // Show share prompt every 3 chats
+        if (next % 3 === 0) {
+          setShowSharePrompt(true);
+        }
+        return next;
+      });
       // Auto-search for next partner (server already re-queued us)
       setStatus('waiting');
     });
@@ -278,6 +289,7 @@ export default function ChatPage() {
               Searching
             </span>
           )}
+          <ShareButton className="bg-white/10 hover:bg-white/20 text-gray-300 text-xs font-semibold px-3 py-1.5 rounded-lg" />
           {status === 'connected' && (
             <button
               onClick={reportUser}
@@ -384,6 +396,28 @@ export default function ChatPage() {
           </span>
         </div>
       </div>
+
+      {/* ── Share Prompt Overlay ── */}
+      {showSharePrompt && (
+        <div className="absolute inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#111118] border border-white/10 rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl">
+            <div className="text-4xl mb-3">🎉</div>
+            <h3 className="text-lg font-bold text-white mb-2">Enjoying Omeelo?</h3>
+            <p className="text-sm text-gray-400 mb-5">
+              You&apos;ve had {chatCount} chats! Share Omeelo with friends and make it even more fun.
+            </p>
+            <div className="flex flex-col gap-2">
+              <ShareButton className="w-full justify-center bg-violet-600 hover:bg-violet-500 text-white font-semibold py-2.5 rounded-xl text-sm" />
+              <button
+                onClick={() => setShowSharePrompt(false)}
+                className="text-gray-500 hover:text-gray-300 text-xs py-2 transition-colors"
+              >
+                Maybe later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Floating Chat Box ── */}
       {showChat && (
