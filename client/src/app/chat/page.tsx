@@ -182,8 +182,8 @@ export default function ChatPage() {
       setMessages([]);
       setChatCount((prev) => {
         const next = prev + 1;
-        // Show share prompt every 3 chats
-        if (next % 3 === 0) {
+        // Show share prompt at 3, 10, 20 chats
+        if (next === 3 || next === 10 || next === 20) {
           setShowSharePrompt(true);
         }
         return next;
