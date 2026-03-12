@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 import './globals.css';
 import AgeVerification from '@/components/AgeVerification';
+import { Analytics } from '@vercel/analytics/next';
 
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 
@@ -130,6 +131,7 @@ export default function RootLayout({
       <body className={nunito.className}>
         <AgeVerification />
         {children}
+        <Analytics />
       </body>
     </html>
   );
