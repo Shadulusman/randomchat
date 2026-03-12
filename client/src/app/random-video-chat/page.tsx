@@ -22,9 +22,95 @@ export const metadata: Metadata = {
   },
 };
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is random video chat on Omeelo really free?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes, Omeelo is completely free. There are no premium tiers, no coin systems, and no hidden charges. Every feature is available to every user at no cost.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do I need to download an app for random video chat?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Omeelo runs entirely in your web browser. It works on Chrome, Safari, Firefox, and Edge across desktop and mobile devices without any installation.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can people find out who I am during a random video chat?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Omeelo does not reveal any identifying information. There are no usernames, no profiles, and no location sharing. You are completely anonymous unless you choose to share details yourself.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What happens if someone is inappropriate during a video chat?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'You can report them with a single click. You can also press Next to immediately disconnect and be matched with someone new. Reported users are reviewed and banned when violations are confirmed.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How is Omeelo different from other random video chat sites?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Omeelo was built from the ground up with modern WebRTC technology, a privacy-first architecture, and a clean interface. Unlike many alternatives, there are no ads, no bots, and no forced sign-ups.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is my video recorded during random chats?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Absolutely not. Video streams travel directly between your browser and the other person using peer-to-peer connections. Omeelo never records, stores, or monitors your video feed.',
+      },
+    },
+  ],
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to Start a Random Video Chat on Omeelo',
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: 'Visit Omeelo',
+      text: 'Navigate to omeelo.com on any modern browser. No downloads or installations are required.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Grant Camera Access',
+      text: 'When prompted, allow your browser to use your camera and microphone.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Get Matched',
+      text: 'Click Start Chatting and our server will connect you with a random stranger instantly.',
+    },
+  ],
+};
+
 export default function RandomVideoChatPage() {
   return (
     <main className="min-h-screen bg-[#0a0a0f]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <Navbar />
 
       <article className="max-w-4xl mx-auto px-4 pt-28 pb-20">
@@ -154,6 +240,65 @@ export default function RandomVideoChatPage() {
           </ol>
         </section>
 
+        {/* Browser & device compatibility */}
+        <section className="mb-14">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Device & Browser Compatibility Guide
+          </h2>
+          <p className="text-gray-400 leading-relaxed mb-6">
+            Omeelo runs on WebRTC, which is natively supported by all modern browsers. Here is
+            exactly what works and any specific settings to be aware of on each platform.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[
+              {
+                device: 'Chrome (Desktop & Android)',
+                status: 'Full Support',
+                note: 'Best experience. WebRTC is natively built in. No settings changes needed. Recommended for Android users.',
+                color: 'text-green-400',
+              },
+              {
+                device: 'Safari (Mac & iPhone)',
+                status: 'Full Support',
+                note: 'Supported from Safari 11+. On iOS, use Safari — not Chrome, as iOS Chrome shares the same WebKit engine and camera access requires Safari permissions.',
+                color: 'text-green-400',
+              },
+              {
+                device: 'Firefox (Desktop)',
+                status: 'Full Support',
+                note: 'Excellent WebRTC support. If camera does not activate, check Firefox settings under Privacy & Security → Camera permissions.',
+                color: 'text-green-400',
+              },
+              {
+                device: 'Edge (Desktop)',
+                status: 'Full Support',
+                note: 'Microsoft Edge is Chromium-based and supports WebRTC natively. Works identically to Chrome.',
+                color: 'text-green-400',
+              },
+              {
+                device: 'Opera',
+                status: 'Full Support',
+                note: 'Chromium-based and supports all WebRTC features. Enable camera permissions if prompted.',
+                color: 'text-green-400',
+              },
+              {
+                device: 'Internet Explorer',
+                status: 'Not Supported',
+                note: 'IE does not support WebRTC. Please upgrade to any modern browser listed above.',
+                color: 'text-red-400',
+              },
+            ].map((item) => (
+              <div key={item.device} className="bg-white/5 border border-white/5 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-semibold text-white text-sm">{item.device}</h3>
+                  <span className={`text-xs font-semibold ${item.color}`}>{item.status}</span>
+                </div>
+                <p className="text-xs text-gray-400">{item.note}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Safety */}
         <section className="mb-14">
           <h2 className="text-2xl font-bold text-white mb-4">
@@ -252,38 +397,13 @@ export default function RandomVideoChatPage() {
             Frequently Asked Questions About Random Video Chat
           </h2>
           <div className="space-y-4">
-            {[
-              {
-                q: 'Is random video chat on Omeelo really free?',
-                a: 'Yes, Omeelo is completely free. There are no premium tiers, no coin systems, and no hidden charges. Every feature is available to every user at no cost.',
-              },
-              {
-                q: 'Do I need to download an app for random video chat?',
-                a: 'No. Omeelo runs entirely in your web browser. It works on Chrome, Safari, Firefox, and Edge across desktop and mobile devices without any installation.',
-              },
-              {
-                q: 'Can people find out who I am during a random video chat?',
-                a: 'Omeelo does not reveal any identifying information. There are no usernames, no profiles, and no location sharing. You are completely anonymous unless you choose to share details yourself.',
-              },
-              {
-                q: 'What happens if someone is inappropriate during a video chat?',
-                a: 'You can report them with a single click. You can also press Next to immediately disconnect and be matched with someone new. Reported users are reviewed and banned when violations are confirmed.',
-              },
-              {
-                q: 'How is Omeelo different from other random video chat sites?',
-                a: 'Omeelo was built from the ground up with modern WebRTC technology, a privacy-first architecture, and a clean interface. Unlike many alternatives, there are no ads, no bots, and no forced sign-ups.',
-              },
-              {
-                q: 'Is my video recorded during random chats?',
-                a: 'Absolutely not. Video streams travel directly between your browser and the other person using peer-to-peer connections. Omeelo never records, stores, or monitors your video feed.',
-              },
-            ].map((faq) => (
+            {faqSchema.mainEntity.map((faq) => (
               <details
-                key={faq.q}
+                key={faq.name}
                 className="bg-white/5 border border-white/5 rounded-xl group"
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-medium">
-                  {faq.q}
+                  {faq.name}
                   <svg
                     className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
                     fill="none"
@@ -298,7 +418,7 @@ export default function RandomVideoChatPage() {
                     />
                   </svg>
                 </summary>
-                <p className="px-5 pb-5 text-sm text-gray-400">{faq.a}</p>
+                <p className="px-5 pb-5 text-sm text-gray-400">{faq.acceptedAnswer.text}</p>
               </details>
             ))}
           </div>

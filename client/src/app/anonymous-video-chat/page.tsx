@@ -22,9 +22,68 @@ export const metadata: Metadata = {
   },
 };
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is anonymous video chat on Omeelo truly private?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Omeelo uses peer-to-peer WebRTC connections so your video never passes through our servers. We collect no personal information and store no conversation data whatsoever.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can the other person find out my identity?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Omeelo does not share any identifying information between users. There are no usernames, no profile photos, and no location data. The other person only knows what you voluntarily tell them during the chat.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do I need to create an account for anonymous video chat?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Omeelo has no accounts, no registration forms, and no login pages. You simply open the website and start chatting.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Are my video chats recorded?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Omeelo does not have the ability to record your video or audio streams. They are transmitted directly between browsers and are not stored anywhere.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What should I do if someone behaves inappropriately?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Click the report button during the chat. The user will be flagged for review. You can also press Next to immediately disconnect and match with someone else.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does Omeelo use cookies to track me?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Omeelo does not use tracking cookies, advertising pixels, or analytics tools that identify individual users. Your browsing session is not monitored or profiled.',
+      },
+    },
+  ],
+};
+
 export default function AnonymousVideoChatPage() {
   return (
     <main className="min-h-screen bg-[#0a0a0f]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Navbar />
 
       <article className="max-w-4xl mx-auto px-4 pt-28 pb-20">
@@ -72,14 +131,13 @@ export default function AnonymousVideoChatPage() {
           </h2>
           <p className="text-gray-400 leading-relaxed mb-4">
             In a world where every online platform tracks your behavior, sells your data, and
-            requires a profile, anonymous video chat offers a refreshing alternative. Here is why
-            anonymity matters more than ever.
+            requires a profile, anonymous video chat offers a refreshing alternative.
           </p>
           <div className="space-y-4">
             {[
               {
                 title: 'Freedom of Expression',
-                desc: 'When your identity is not attached to a conversation, you feel free to be yourself. Share your genuine thoughts, ask bold questions, and explore topics you might avoid on platforms where your name and photo are on display.',
+                desc: 'When your identity is not attached to a conversation, you feel free to be yourself. Share genuine thoughts, ask bold questions, and explore topics you might avoid on platforms where your name and photo are on display.',
               },
               {
                 title: 'No Digital Footprint',
@@ -105,58 +163,50 @@ export default function AnonymousVideoChatPage() {
           </div>
         </section>
 
-        {/* How Omeelo protects privacy */}
+        {/* How WebRTC works - UNIQUE technical section */}
         <section className="mb-14">
           <h2 className="text-2xl font-bold text-white mb-4">
-            How Omeelo Keeps Your Video Chat Anonymous
+            How WebRTC Protects Your Anonymity — The Technical Reality
           </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            Anonymity on Omeelo is not just a marketing claim. It is built into the technical
-            architecture from the ground up. Here is how the platform protects your privacy at every
-            layer.
+          <p className="text-gray-400 leading-relaxed mb-6">
+            Omeelo&apos;s anonymity is not just a privacy policy promise — it is enforced at the
+            protocol level by WebRTC. Here is exactly what happens when you start a chat.
           </p>
-          <ul className="space-y-3 text-gray-400">
-            <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold text-sm">
-                P2P
-              </span>
-              <div>
-                <strong className="text-white">Peer-to-Peer Video Streams</strong> — Your video and
-                audio travel directly from your browser to the other person&apos;s browser via WebRTC.
-                Omeelo&apos;s servers never see, process, or store your media streams.
+          <div className="space-y-4">
+            {[
+              {
+                step: 'Step 1: Signaling',
+                desc: 'When you click Start, Omeelo&apos;s signaling server matches you with another user and exchanges connection metadata (called an SDP offer/answer). This metadata contains technical connection info — not your personal identity. The server&apos;s job ends here.',
+                icon: '📡',
+              },
+              {
+                step: 'Step 2: ICE Negotiation',
+                desc: 'WebRTC uses ICE (Interactive Connectivity Establishment) to find the best direct path between your browser and the other person&apos;s browser. In most cases, this creates a direct peer-to-peer tunnel that bypasses Omeelo&apos;s servers entirely.',
+                icon: '🔀',
+              },
+              {
+                step: 'Step 3: DTLS Encryption',
+                desc: 'Once connected, all video and audio is encrypted using DTLS (Datagram Transport Layer Security) before leaving your device. Even if someone intercepted the data stream, they could not decode it without the encryption keys that only your browsers hold.',
+                icon: '🔐',
+              },
+              {
+                step: 'Step 4: SRTP Transmission',
+                desc: 'Your video and audio travel as SRTP (Secure Real-Time Protocol) packets directly to the other person. Omeelo&apos;s servers never receive, decode, or store any part of your media stream.',
+                icon: '📤',
+              },
+            ].map((item) => (
+              <div key={item.step} className="flex gap-4 bg-white/5 border border-white/5 rounded-xl p-5">
+                <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                <div>
+                  <h3 className="font-semibold text-white mb-1">{item.step}</h3>
+                  <p className="text-sm text-gray-400">{item.desc}</p>
+                </div>
               </div>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold text-sm">
-                0
-              </span>
-              <div>
-                <strong className="text-white">Zero Data Collection</strong> — We do not ask for
-                your name, email, phone number, or any personal identifier. There is nothing to
-                create an account with because accounts do not exist.
-              </div>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold text-sm">
-                NL
-              </span>
-              <div>
-                <strong className="text-white">No Chat Logs</strong> — Text messages sent during a
-                conversation are relayed in real time and discarded. They are never written to a
-                database, never backed up, and never accessible after the session ends.
-              </div>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold text-sm">
-                NR
-              </span>
-              <div>
-                <strong className="text-white">No Recordings</strong> — Omeelo does not record video
-                or audio. The platform has no mechanism to capture or replay any part of your
-                conversation.
-              </div>
-            </li>
-          </ul>
+            ))}
+          </div>
+          <p className="text-gray-500 text-sm mt-4">
+            The result: Omeelo&apos;s servers only ever see encrypted connection handshakes — never your face, voice, or messages.
+          </p>
         </section>
 
         {/* Anonymous vs traditional */}
@@ -166,7 +216,7 @@ export default function AnonymousVideoChatPage() {
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-white/5 border border-white/5 rounded-xl p-5">
-              <h3 className="font-semibold text-white mb-3">Traditional Video Calls</h3>
+              <h3 className="font-semibold text-white mb-3">Traditional Video Calls (Zoom, Teams)</h3>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 mt-0.5">&times;</span>
@@ -183,6 +233,10 @@ export default function AnonymousVideoChatPage() {
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 mt-0.5">&times;</span>
                   Tied to your social or professional identity
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400 mt-0.5">&times;</span>
+                  Subject to data requests and legal holds
                 </li>
               </ul>
             </div>
@@ -205,46 +259,53 @@ export default function AnonymousVideoChatPage() {
                   <span className="text-green-400 mt-0.5">&#10003;</span>
                   Completely detached from your real identity
                 </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-0.5">&#10003;</span>
+                  Nothing to hand over even if legally requested
+                </li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Who uses anonymous video chat */}
+        {/* How Omeelo protects privacy */}
         <section className="mb-14">
           <h2 className="text-2xl font-bold text-white mb-4">
-            Who Uses Anonymous Video Chat?
+            How Omeelo Keeps Your Video Chat Anonymous
           </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            Anonymous video chat attracts a diverse range of users from all over the world. The
-            common thread is a desire for genuine, pressure-free conversation without the baggage
-            of online identity.
-          </p>
-          <div className="grid sm:grid-cols-2 gap-4 text-sm">
+          <ul className="space-y-3 text-gray-400">
             {[
               {
-                title: 'Introverts and Shy Individuals',
-                desc: 'People who find it difficult to initiate conversations in real life often thrive in anonymous video chat, where the stakes feel lower and every interaction is a fresh start.',
+                label: 'P2P',
+                title: 'Peer-to-Peer Video Streams',
+                desc: 'Your video and audio travel directly from your browser to the other person\'s browser via WebRTC. Omeelo\'s servers never see, process, or store your media streams.',
               },
               {
-                title: 'Travelers and Expats',
-                desc: 'Those living abroad or planning trips use anonymous chat to connect with locals, learn about culture, and practice language skills without commitment.',
+                label: '0',
+                title: 'Zero Data Collection',
+                desc: 'We do not ask for your name, email, phone number, or any personal identifier. There is nothing to create an account with because accounts do not exist.',
               },
               {
-                title: 'Privacy Advocates',
-                desc: 'People who are conscious about their digital footprint choose anonymous platforms specifically because they leave no trace.',
+                label: 'NL',
+                title: 'No Chat Logs',
+                desc: 'Text messages sent during a conversation are relayed in real time and discarded. They are never written to a database, never backed up, and never accessible after the session ends.',
               },
               {
-                title: 'Anyone Seeking Genuine Connection',
-                desc: 'Without the filters of social media, anonymous video chat strips interaction down to its most authentic form — two people simply talking.',
+                label: 'NR',
+                title: 'No Recordings',
+                desc: 'Omeelo does not record video or audio. The platform has no mechanism to capture or replay any part of your conversation.',
               },
-            ].map((u) => (
-              <div key={u.title} className="bg-white/5 border border-white/5 rounded-xl p-5">
-                <h3 className="font-semibold text-white mb-1">{u.title}</h3>
-                <p className="text-gray-400">{u.desc}</p>
-              </div>
+            ].map((item) => (
+              <li key={item.label} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold text-sm">
+                  {item.label}
+                </span>
+                <div>
+                  <strong className="text-white">{item.title}</strong> — {item.desc}
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
         {/* CTA Banner */}
@@ -268,57 +329,17 @@ export default function AnonymousVideoChatPage() {
 
         {/* FAQ */}
         <section className="mb-14">
-          <h2 className="text-2xl font-bold text-white mb-6">
-            Anonymous Video Chat FAQ
-          </h2>
+          <h2 className="text-2xl font-bold text-white mb-6">Anonymous Video Chat FAQ</h2>
           <div className="space-y-4">
-            {[
-              {
-                q: 'Is anonymous video chat on Omeelo truly private?',
-                a: 'Yes. Omeelo uses peer-to-peer WebRTC connections so your video never passes through our servers. We collect no personal information and store no conversation data whatsoever.',
-              },
-              {
-                q: 'Can the other person find out my identity?',
-                a: 'Omeelo does not share any identifying information between users. There are no usernames, no profile photos, and no location data. The other person only knows what you voluntarily tell them during the chat.',
-              },
-              {
-                q: 'Do I need to create an account for anonymous video chat?',
-                a: 'No. Omeelo has no accounts, no registration forms, and no login pages. You simply open the website and start chatting.',
-              },
-              {
-                q: 'Are my video chats recorded?',
-                a: 'No. Omeelo does not have the ability to record your video or audio streams. They are transmitted directly between browsers and are not stored anywhere.',
-              },
-              {
-                q: 'What should I do if someone behaves inappropriately?',
-                a: 'Click the report button during the chat. The user will be flagged for review. You can also press Next to immediately disconnect and match with someone else.',
-              },
-              {
-                q: 'Does Omeelo use cookies to track me?',
-                a: 'Omeelo does not use tracking cookies, advertising pixels, or analytics tools that identify individual users. Your browsing session is not monitored.',
-              },
-            ].map((faq) => (
-              <details
-                key={faq.q}
-                className="bg-white/5 border border-white/5 rounded-xl group"
-              >
+            {faqSchema.mainEntity.map((faq) => (
+              <details key={faq.name} className="bg-white/5 border border-white/5 rounded-xl group">
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-medium">
-                  {faq.q}
-                  <svg
-                    className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
+                  {faq.name}
+                  <svg className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </summary>
-                <p className="px-5 pb-5 text-sm text-gray-400">{faq.a}</p>
+                <p className="px-5 pb-5 text-sm text-gray-400">{faq.acceptedAnswer.text}</p>
               </details>
             ))}
           </div>
@@ -326,9 +347,7 @@ export default function AnonymousVideoChatPage() {
 
         {/* Internal Links */}
         <section className="mb-14">
-          <h2 className="text-lg font-semibold text-white text-center mb-6">
-            Discover More on Omeelo
-          </h2>
+          <h2 className="text-lg font-semibold text-white text-center mb-6">Discover More on Omeelo</h2>
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             {[
               { href: '/', label: 'Home' },
@@ -338,11 +357,7 @@ export default function AnonymousVideoChatPage() {
               { href: '/video-chat-with-strangers', label: 'Video Chat with Strangers' },
               { href: '/blog', label: 'Blog' },
             ].map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="bg-white/5 border border-white/10 hover:border-violet-500/30 text-gray-400 hover:text-white px-4 py-2 rounded-lg transition-colors"
-              >
+              <Link key={link.href} href={link.href} className="bg-white/5 border border-white/10 hover:border-violet-500/30 text-gray-400 hover:text-white px-4 py-2 rounded-lg transition-colors">
                 {link.label}
               </Link>
             ))}
@@ -350,24 +365,13 @@ export default function AnonymousVideoChatPage() {
         </section>
       </article>
 
-      {/* Footer */}
       <footer className="border-t border-white/5 py-8 text-center text-sm text-gray-500">
         <div className="flex flex-wrap justify-center gap-6 mb-4">
-          <Link href="/random-video-chat" className="hover:text-white transition-colors">
-            Random Video Chat
-          </Link>
-          <Link href="/omegle-alternative" className="hover:text-white transition-colors">
-            Omegle Alternative
-          </Link>
-          <Link href="/blog" className="hover:text-white transition-colors">
-            Blog
-          </Link>
-          <Link href="/privacy" className="hover:text-white transition-colors">
-            Privacy Policy
-          </Link>
-          <Link href="/terms" className="hover:text-white transition-colors">
-            Terms of Service
-          </Link>
+          <Link href="/random-video-chat" className="hover:text-white transition-colors">Random Video Chat</Link>
+          <Link href="/omegle-alternative" className="hover:text-white transition-colors">Omegle Alternative</Link>
+          <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
         </div>
         <div className="flex items-center justify-center gap-2 mb-4">
           <Logo size={24} />

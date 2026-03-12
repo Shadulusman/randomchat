@@ -22,9 +22,68 @@ export const metadata: Metadata = {
   },
 };
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is Omeelo a safe Omegle alternative?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Omeelo was specifically designed with safety improvements over Omegle, including a one-click report system, automatic banning of repeat offenders, and a privacy-first architecture that collects no personal data.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is this Omegle alternative free to use?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Omeelo is 100% free with no premium tiers, no coin systems, and no hidden costs. Every feature is available to every user without payment.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Will Omegle ever come back?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'As of 2026, Omegle has not reopened and its founder has stated the decision to close was final. Omeelo was built as a long-term successor that improves on the original concept.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do I need to download an app to use this Omegle alternative?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Omeelo runs entirely in your web browser on both desktop and mobile devices. There is nothing to download or install.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I use Omeelo on my phone like I used Omegle?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Absolutely. Omeelo is fully responsive and works on iOS and Android through Safari, Chrome, Firefox, and other modern mobile browsers.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How does Omeelo compare to other Omegle alternatives like Chatroulette?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Omeelo differentiates itself with zero registration requirements, no advertisements, modern WebRTC video quality, and a strict no-data-collection policy. Many alternatives require sign-ups or are supported by heavy advertising.',
+      },
+    },
+  ],
+};
+
 export default function OmegleAlternativePage() {
   return (
     <main className="min-h-screen bg-[#0a0a0f]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Navbar />
 
       <article className="max-w-4xl mx-auto px-4 pt-28 pb-20">
@@ -46,31 +105,60 @@ export default function OmegleAlternativePage() {
           </Link>
         </section>
 
-        {/* What happened to Omegle */}
+        {/* Omegle Shutdown Timeline */}
         <section className="mb-14">
-          <h2 className="text-2xl font-bold text-white mb-4">
-            What Happened to Omegle?
+          <h2 className="text-2xl font-bold text-white mb-6">
+            The Complete History of Omegle's Rise and Fall
           </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            Omegle launched in 2009 and quickly became the defining platform for random video chat.
-            For over fourteen years, it connected millions of strangers through one-on-one webcam
-            conversations. The concept was simple: press a button, get matched with a random person,
-            and start talking.
+          <p className="text-gray-400 leading-relaxed mb-6">
+            Understanding why Omegle shut down helps explain why Omeelo was built the way it was.
+            Every design decision in Omeelo directly addresses a flaw that ultimately killed the original.
           </p>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            In November 2023, Omegle&apos;s founder announced the permanent shutdown of the
-            platform, citing mounting safety concerns and the operational burden of moderating
-            millions of interactions. The closure left a massive gap in the market for people who
-            relied on the platform for entertainment, social connection, language practice, and
-            cultural exchange.
-          </p>
-          <p className="text-gray-400 leading-relaxed">
-            Since then, countless sites have claimed to be the next Omegle. Most of them are plagued
-            by bots, intrusive ads, forced registrations, or poor video quality. Omeelo takes a
-            different approach by focusing on what made Omegle great in the first place — instant,
-            anonymous, human-to-human video connection — while solving the problems that led to its
-            downfall.
-          </p>
+          <div className="relative border-l-2 border-violet-600/30 pl-6 space-y-6">
+            {[
+              {
+                year: '2009',
+                event: 'Omegle Launches',
+                desc: 'Leif K-Brooks, then 18 years old, launches Omegle from his bedroom in Vermont. The concept is radically simple: connect two anonymous strangers via text chat. The site goes viral within weeks.',
+              },
+              {
+                year: '2010',
+                event: 'Video Chat Added',
+                desc: 'Omegle introduces video chat, transforming the platform into the world\'s first mainstream random video chat service. Daily active users surge into the millions.',
+              },
+              {
+                year: '2013',
+                event: 'Spy Mode Launches',
+                desc: 'Omegle adds "Spy Mode" where a third party can watch two strangers discuss a question. Peak cultural moment — Omegle is referenced in music, TV, and memes worldwide.',
+              },
+              {
+                year: '2020',
+                event: 'COVID-19 Traffic Spike',
+                desc: 'Lockdowns drive unprecedented traffic to Omegle. Monthly visits exceed 65 million. The infrastructure strain and moderation challenges become unmanageable.',
+              },
+              {
+                year: 'Nov 2023',
+                event: 'Omegle Shuts Down Permanently',
+                desc: 'Leif K-Brooks publishes a farewell blog post citing legal battles, safety concerns, and the impossible burden of moderating millions of unfiltered interactions. The domain goes dark.',
+              },
+              {
+                year: '2024',
+                event: 'Omeelo Launches',
+                desc: 'Built in response to the Omegle shutdown, Omeelo launches with modern WebRTC technology, peer-to-peer privacy, and a built-in moderation system designed to solve the exact problems that ended Omegle.',
+              },
+            ].map((item) => (
+              <div key={item.year} className="relative">
+                <div className="absolute -left-8 w-4 h-4 rounded-full bg-violet-600 border-2 border-[#0a0a0f] top-1" />
+                <div className="bg-white/5 border border-white/5 rounded-xl p-5">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-violet-400 font-bold text-sm">{item.year}</span>
+                    <h3 className="font-semibold text-white">{item.event}</h3>
+                  </div>
+                  <p className="text-sm text-gray-400">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Why Omeelo is the best alternative */}
@@ -121,39 +209,40 @@ export default function OmegleAlternativePage() {
           </div>
         </section>
 
-        {/* Comparison table */}
+        {/* Head-to-head comparison vs competitors */}
         <section className="mb-14">
           <h2 className="text-2xl font-bold text-white mb-4">
-            Omeelo vs. Other Omegle Alternatives
+            Omeelo vs. Every Major Omegle Alternative
           </h2>
           <p className="text-gray-400 leading-relaxed mb-6">
-            Not all Omegle alternatives are created equal. Here is how Omeelo compares to the
-            typical alternatives you will find online.
+            Since Omegle closed, dozens of platforms have competed for the same audience. Here is
+            an honest comparison of how Omeelo stacks up against the most well-known alternatives.
           </p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-gray-400 border-collapse">
               <thead>
                 <tr className="border-b border-white/10 text-left text-white">
-                  <th className="py-3 pr-4">Feature</th>
-                  <th className="py-3 pr-4">Omeelo</th>
-                  <th className="py-3">Typical Alternatives</th>
+                  <th className="py-3 pr-4">Platform</th>
+                  <th className="py-3 pr-4">Sign-Up</th>
+                  <th className="py-3 pr-4">Ads</th>
+                  <th className="py-3 pr-4">Mobile</th>
+                  <th className="py-3">Cost</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {[
-                  ['No sign-up required', 'Yes', 'Often requires email or social login'],
-                  ['HD video quality', 'Yes (WebRTC P2P)', 'Varies, often low quality'],
-                  ['Mobile support', 'Full browser support', 'App download usually required'],
-                  ['Ads and pop-ups', 'None', 'Heavy ad load'],
-                  ['Bot-free', 'Yes', 'Frequently plagued by bots'],
-                  ['Data collection', 'Zero personal data', 'Often collects extensive data'],
-                  ['Video recording', 'Never recorded', 'Unclear policies'],
-                  ['Cost', '100% free', 'Free tier with paid upsells'],
-                ].map(([feature, omeelo, others]) => (
-                  <tr key={feature}>
-                    <td className="py-3 pr-4 text-white font-medium">{feature}</td>
-                    <td className="py-3 pr-4 text-green-400">{omeelo}</td>
-                    <td className="py-3 text-gray-500">{others}</td>
+                  ['Omeelo', 'None required', 'No ads', 'Full browser support', '100% free'],
+                  ['Chatroulette', 'Optional account', 'Display ads', 'App required', 'Free with paid filters'],
+                  ['Emerald Chat', 'Email required', 'Moderate ads', 'Limited mobile', 'Freemium'],
+                  ['OmeTV', 'Social login required', 'Heavy ads', 'App required', 'Free with coin system'],
+                  ['Chatspin', 'Account required', 'Heavy ads', 'App only on mobile', 'Freemium'],
+                ].map(([platform, signup, ads, mobile, cost]) => (
+                  <tr key={platform}>
+                    <td className={`py-3 pr-4 font-medium ${platform === 'Omeelo' ? 'text-violet-400' : 'text-white'}`}>{platform}</td>
+                    <td className={`py-3 pr-4 ${platform === 'Omeelo' ? 'text-green-400' : ''}`}>{signup}</td>
+                    <td className={`py-3 pr-4 ${platform === 'Omeelo' ? 'text-green-400' : ''}`}>{ads}</td>
+                    <td className={`py-3 pr-4 ${platform === 'Omeelo' ? 'text-green-400' : ''}`}>{mobile}</td>
+                    <td className={`py-3 ${platform === 'Omeelo' ? 'text-green-400' : ''}`}>{cost}</td>
                   </tr>
                 ))}
               </tbody>
@@ -168,8 +257,7 @@ export default function OmegleAlternativePage() {
           </h2>
           <p className="text-gray-400 leading-relaxed mb-4">
             The shutdown of Omegle was not just the loss of a website. It was the loss of a unique
-            social experience. Here are the things people missed most and how Omeelo recreates
-            them.
+            social experience. Here are the things people missed most and how Omeelo recreates them.
           </p>
           <div className="space-y-4">
             {[
@@ -267,38 +355,13 @@ export default function OmegleAlternativePage() {
             Omegle Alternative FAQ
           </h2>
           <div className="space-y-4">
-            {[
-              {
-                q: 'Is Omeelo a safe Omegle alternative?',
-                a: 'Yes. Omeelo was specifically designed with safety improvements over Omegle, including a one-click report system, automatic banning of repeat offenders, and a privacy-first architecture that collects no personal data.',
-              },
-              {
-                q: 'Is this Omegle alternative free to use?',
-                a: 'Omeelo is 100% free with no premium tiers, no coin systems, and no hidden costs. Every feature is available to every user without payment.',
-              },
-              {
-                q: 'Will Omegle ever come back?',
-                a: 'As of 2026, Omegle has not reopened and its founder has stated the decision to close was final. Omeelo was built as a long-term successor that improves on the original concept.',
-              },
-              {
-                q: 'Do I need to download an app to use this Omegle alternative?',
-                a: 'No. Omeelo runs entirely in your web browser on both desktop and mobile devices. There is nothing to download or install.',
-              },
-              {
-                q: 'Can I use Omeelo on my phone like I used Omegle?',
-                a: 'Absolutely. Omeelo is fully responsive and works on iOS and Android through Safari, Chrome, Firefox, and other modern mobile browsers.',
-              },
-              {
-                q: 'How does Omeelo compare to other Omegle alternatives like Chatroulette?',
-                a: 'Omeelo differentiates itself with zero registration requirements, no advertisements, modern WebRTC video quality, and a strict no-data-collection policy. Many alternatives require sign-ups or are supported by heavy advertising.',
-              },
-            ].map((faq) => (
+            {faqSchema.mainEntity.map((faq) => (
               <details
-                key={faq.q}
+                key={faq.name}
                 className="bg-white/5 border border-white/5 rounded-xl group"
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-medium">
-                  {faq.q}
+                  {faq.name}
                   <svg
                     className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
                     fill="none"
@@ -313,7 +376,7 @@ export default function OmegleAlternativePage() {
                     />
                   </svg>
                 </summary>
-                <p className="px-5 pb-5 text-sm text-gray-400">{faq.a}</p>
+                <p className="px-5 pb-5 text-sm text-gray-400">{faq.acceptedAnswer.text}</p>
               </details>
             ))}
           </div>
