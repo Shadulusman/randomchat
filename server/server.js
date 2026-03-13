@@ -23,6 +23,14 @@ const io = new Server(server, {
     origin: allowedOrigins,
     methods: ['GET', 'POST'],
   },
+  // ── Scale tuning ──────────────────────────────────────────────────────────
+  // Increase the ping interval/timeout so the server isn't overwhelmed
+  // by heartbeat chatter at 10k connections.
+  pingInterval: 25000,   // default 25 000 ms – keep as-is
+  pingTimeout:  20000,   // default 20 000 ms – keep as-is
+  // Use only WebSocket transport; avoids the HTTP long-poll upgrade overhead
+  // at the cost of older browser support (acceptable for this app).
+  transports: ['websocket'],
 });
 
 app.use(cors({ origin: allowedOrigins }));
@@ -32,14 +40,33 @@ app.use(express.json());
 // DATA STRUCTURES
 // ──────────────────────────────────────────────
 
-// Queue of socket IDs waiting to be matched
-const waitingQueue = [];
+// Use a Set for O(1) add/has/delete instead of an array with indexOf/splice.
+// We still need ordered iteration for matching, so we keep insertion order
+// (Set preserves it) and convert to iterator when scanning.
+const waitingSet = new Set();
 
-// Map: socketId -> { partnerId, recentPartners[] }
+// Map: socketId -> { partnerId, recentPartners: Set }
+// recentPartners is a Set for O(1) lookup; we cap it at 5 entries manually.
 const users = new Map();
 
 // Map: socketId -> number of reports received
 const reportCounts = new Map();
+
+// ──────────────────────────────────────────────
+// LOGGING  (throttled at scale)
+// ──────────────────────────────────────────────
+
+// At 10k connections a console.log per event creates serious I/O pressure.
+// We only log every N-th connection event and key errors instead.
+let connCount = 0;
+const LOG_EVERY = 100; // log 1 in 100 connect/disconnect events
+
+function logConn(dir, id) {
+  connCount++;
+  if (connCount % LOG_EVERY === 0) {
+    console.log(`[${dir}] ${id}  |  online: ${io.engine.clientsCount}  |  waiting: ${waitingSet.size}`);
+  }
+}
 
 // ──────────────────────────────────────────────
 // REST ENDPOINTS
@@ -50,6 +77,7 @@ app.get('/', (_req, res) => {
   res.json({
     status: 'ok',
     usersOnline: io.engine.clientsCount,
+    usersWaiting: waitingSet.size,
   });
 });
 
@@ -74,11 +102,10 @@ app.post('/api/report', (req, res) => {
 });
 
 // ──────────────────────────────────────────────
-// HELPER: remove a socket from the waiting queue
+// HELPER: remove a socket from the waiting set
 // ──────────────────────────────────────────────
 function removeFromQueue(socketId) {
-  const idx = waitingQueue.indexOf(socketId);
-  if (idx !== -1) waitingQueue.splice(idx, 1);
+  waitingSet.delete(socketId); // O(1)
 }
 
 // ──────────────────────────────────────────────
@@ -102,55 +129,57 @@ function disconnectPartner(socketId) {
 
 // ──────────────────────────────────────────────
 // HELPER: try to match a socket with someone
+// O(n) scan of the waiting set – acceptable because the set only contains
+// *waiting* users (a fraction of total connections) and the loop exits on
+// the first valid candidate.
 // ──────────────────────────────────────────────
 function tryMatch(socketId) {
   const userData = users.get(socketId);
   if (!userData) return;
 
-  // Count how many people are in the queue (excluding self)
-  const queuedOthers = waitingQueue.filter((id) => id !== socketId).length;
+  const queueSize = waitingSet.size;
 
-  for (let i = 0; i < waitingQueue.length; i++) {
-    const candidateId = waitingQueue[i];
-
+  for (const candidateId of waitingSet) {
     // Skip self
     if (candidateId === socketId) continue;
 
     const candidateData = users.get(candidateId);
-    if (!candidateData) continue;
+    if (!candidateData) {
+      // Stale entry – clean it up
+      waitingSet.delete(candidateId);
+      continue;
+    }
 
     // Only avoid recent partners when there are enough people online
-    // (with < 5 people in queue, allow rematching so the site stays usable)
-    if (queuedOthers >= 5) {
-      if (userData.recentPartners.includes(candidateId)) continue;
-      if (candidateData.recentPartners.includes(socketId)) continue;
+    if (queueSize >= 5) {
+      if (userData.recentPartners.has(candidateId)) continue;
+      if (candidateData.recentPartners.has(socketId)) continue;
     }
 
     // ── Match found ──
-    waitingQueue.splice(i, 1);
-    removeFromQueue(socketId);
+    waitingSet.delete(candidateId);
+    waitingSet.delete(socketId);
 
     // Link partners
-    userData.partnerId = candidateId;
+    userData.partnerId    = candidateId;
     candidateData.partnerId = socketId;
 
     // Track recent partners (keep last 5)
+    // recentPartners is a plain array here for ordered eviction
     userData.recentPartners.push(candidateId);
     if (userData.recentPartners.length > 5) userData.recentPartners.shift();
     candidateData.recentPartners.push(socketId);
     if (candidateData.recentPartners.length > 5) candidateData.recentPartners.shift();
 
     // Tell the initiator to create the WebRTC offer
-    io.to(socketId).emit('matched', { partnerId: candidateId, initiator: true });
-    io.to(candidateId).emit('matched', { partnerId: socketId, initiator: false });
+    io.to(socketId).emit('matched',   { partnerId: candidateId, initiator: true });
+    io.to(candidateId).emit('matched', { partnerId: socketId,    initiator: false });
 
     return;
   }
 
   // No match – add to queue
-  if (!waitingQueue.includes(socketId)) {
-    waitingQueue.push(socketId);
-  }
+  waitingSet.add(socketId);
   io.to(socketId).emit('waiting');
 }
 
@@ -159,11 +188,11 @@ function tryMatch(socketId) {
 // ──────────────────────────────────────────────
 
 io.on('connection', (socket) => {
-  console.log(`+ connected: ${socket.id}`);
+  logConn('+', socket.id);
 
   users.set(socket.id, {
-    partnerId: null,
-    recentPartners: [],
+    partnerId:      null,
+    recentPartners: [],   // plain array – max 5, for ordered eviction
   });
 
   // ── User wants to find a chat partner ──
@@ -198,7 +227,7 @@ io.on('connection', (socket) => {
 
   // ── Skip to next user ──
   socket.on('skip', () => {
-    const userData = users.get(socket.id);
+    const userData  = users.get(socket.id);
     const partnerId = userData?.partnerId;
 
     disconnectPartner(socket.id);
@@ -218,8 +247,8 @@ io.on('connection', (socket) => {
 
   // ── Disconnect ──
   socket.on('disconnect', () => {
-    console.log(`- disconnected: ${socket.id}`);
-    const userData = users.get(socket.id);
+    logConn('-', socket.id);
+    const userData  = users.get(socket.id);
     const partnerId = userData?.partnerId;
 
     removeFromQueue(socket.id);

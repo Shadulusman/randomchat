@@ -1,0 +1,15 @@
+{
+  "name": "randomchat-loadtest",
+  "version": "1.0.0",
+  "description": "Load test for Omeelo signaling server - 10k concurrent users",
+  "scripts": {
+    "test:smoke":  "artillery run --config artillery.yml scenarios/smoke.yml",
+    "test:load":   "artillery run --config artillery.yml scenarios/load.yml",
+    "test:stress": "artillery run --config artillery.yml scenarios/stress.yml",
+    "report":      "artillery report loadtest-report.json"
+  },
+  "dependencies": {
+    "artillery": "^2.0.0",
+    "artillery-engine-socketio-v3": "^1.0.0"
+  }
+}
