@@ -72,6 +72,11 @@ function logConn(dir, id) {
 // REST ENDPOINTS
 // ──────────────────────────────────────────────
 
+// Google AdSense verification
+app.get('/ads.txt', (_req, res) => {
+  res.type('text/plain').send('google.com, pub-5078446623390820, DIRECT, f08c47fec0942fa0\n');
+});
+
 // Health check – also returns how many users are online
 app.get('/', (_req, res) => {
   res.json({
