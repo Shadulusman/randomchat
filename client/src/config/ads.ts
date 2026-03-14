@@ -5,7 +5,7 @@
 //   3. Choose "Push Notifications" as the ad format
 //   4. Copy the numeric Zone ID (e.g. 4912345)
 //   5. Replace the string below with your real zone ID
-export const PROPELLER_ZONE_ID = 'YOUR_ZONE_ID';
+export const PROPELLER_ZONE_ID = '10731890';
 
 // ─── AdSense Slot IDs ─────────────────────────────────────────────────────────
 // To get these:
