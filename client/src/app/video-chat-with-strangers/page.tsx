@@ -22,9 +22,68 @@ export const metadata: Metadata = {
   },
 };
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is video chatting with strangers on Omeelo safe?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Omeelo uses peer-to-peer WebRTC connections that bypass our servers entirely, meaning your video is never seen or stored by the platform. You also have instant access to a report button and a skip button for full control over every interaction.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do I need to pay to video chat with strangers?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Omeelo is completely free. There are no premium subscriptions, no virtual currencies, and no paywall-gated features. Every user gets the full experience at no cost.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I video chat with strangers on my phone?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Absolutely. Omeelo works in mobile browsers on both iOS and Android. No app download is needed — just open the website and start chatting.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Will strangers be able to see my personal information?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Omeelo does not display any personal information because it does not collect any. There are no usernames, no location tags, and no profile cards.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How quickly will I be matched with a stranger?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Matching on Omeelo typically takes under three seconds. During peak hours with more users online, matching is even faster.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What if I get matched with someone I do not want to talk to?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Press the Next button. You will be disconnected from the current person and matched with a new stranger instantly. There is no limit to how many times you can skip.',
+      },
+    },
+  ],
+};
+
 export default function VideoChatWithStrangersPage() {
   return (
     <main className="min-h-screen bg-[#0a0a0f]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Navbar />
 
       <article className="max-w-4xl mx-auto px-4 pt-28 pb-20">
@@ -70,7 +129,61 @@ export default function VideoChatWithStrangersPage() {
           </p>
         </section>
 
-        {/* How video chat differs from text */}
+        {/* Video Chat Setup Tips - UNIQUE SECTION */}
+        <section className="mb-14">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            How to Look and Sound Great on Video Chat
+          </h2>
+          <p className="text-gray-400 leading-relaxed mb-6">
+            A few simple adjustments make a huge difference in how you come across on video chat.
+            You do not need expensive equipment — just follow these tips to make a strong first
+            impression on every stranger you meet.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[
+              {
+                icon: '💡',
+                title: 'Lighting: Face the Light',
+                desc: 'Sit with a window or lamp in front of you, not behind you. Back-lighting silhouettes your face and makes you look dark on screen. A ring light or a simple desk lamp pointed at your face is ideal.',
+              },
+              {
+                icon: '📷',
+                title: 'Camera Height: Eye Level',
+                desc: 'Position your camera at eye level or slightly above. Pointing the camera upward from a desk makes you look like you are staring down at people. Stack your laptop on books if needed.',
+              },
+              {
+                icon: '🎧',
+                title: 'Audio: Use Headphones',
+                desc: 'Built-in laptop speakers create echo and feedback. Headphones eliminate this completely. Even basic earbuds give dramatically better audio than speakers. Your conversation partner will thank you.',
+              },
+              {
+                icon: '🖼️',
+                title: 'Background: Keep It Clean',
+                desc: 'A tidy, neutral background keeps the focus on you. A plain wall, a neat bookshelf, or anything that is not cluttered works well. You do not need a professional setup — just avoid distracting messes.',
+              },
+              {
+                icon: '👀',
+                title: 'Eye Contact: Look at the Camera',
+                desc: 'It feels natural to look at the screen, but looking at the camera lens creates the illusion of direct eye contact for the other person. Try to glance at the camera periodically during conversation.',
+              },
+              {
+                icon: '🌐',
+                title: 'Connection: Use Ethernet or Strong Wi-Fi',
+                desc: 'Video quality drops dramatically on weak Wi-Fi. If your connection is unstable, try moving closer to your router or using an ethernet cable. Omeelo\'s WebRTC is efficient but needs a stable connection.',
+              },
+            ].map((tip) => (
+              <div key={tip.title} className="bg-white/5 border border-white/5 rounded-xl p-5">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">{tip.icon}</span>
+                  <h3 className="font-semibold text-white text-sm">{tip.title}</h3>
+                </div>
+                <p className="text-sm text-gray-400">{tip.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Video vs text comparison */}
         <section className="mb-14">
           <h2 className="text-2xl font-bold text-white mb-4">
             Video Chat vs. Text Chat: Why Face-to-Face Wins
@@ -79,46 +192,78 @@ export default function VideoChatWithStrangersPage() {
             <div className="bg-white/5 border border-white/5 rounded-xl p-5">
               <h3 className="font-semibold text-white mb-3">Text-Only Chat</h3>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-600 mt-0.5">&bull;</span>
-                  Easy to misinterpret tone and intent
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-600 mt-0.5">&bull;</span>
-                  High chance of bots and fake identities
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-600 mt-0.5">&bull;</span>
-                  Conversations can feel impersonal and shallow
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-600 mt-0.5">&bull;</span>
-                  No body language or vocal cues
-                </li>
+                {[
+                  'Easy to misinterpret tone and intent',
+                  'High chance of bots and fake identities',
+                  'Conversations can feel impersonal and shallow',
+                  'No body language or vocal cues',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="text-gray-600 mt-0.5">&bull;</span>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="bg-white/5 border border-white/5 rounded-xl p-5">
               <h3 className="font-semibold text-white mb-3">Video Chat on Omeelo</h3>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">&#10003;</span>
-                  Facial expressions and tone convey real emotion
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">&#10003;</span>
-                  Verified real humans — not bots
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">&#10003;</span>
-                  Conversations feel genuine and engaging
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-0.5">&#10003;</span>
-                  Full nonverbal communication included
-                </li>
+                {[
+                  'Facial expressions and tone convey real emotion',
+                  'Verified real humans — not bots',
+                  'Conversations feel genuine and engaging',
+                  'Full nonverbal communication included',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="text-green-400 mt-0.5">&#10003;</span>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
+        </section>
+
+        {/* Best times to chat */}
+        <section className="mb-14">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Best Times to Video Chat with Strangers
+          </h2>
+          <p className="text-gray-400 leading-relaxed mb-6">
+            More users online means faster matching and more diverse conversations. Here is when
+            traffic on Omeelo tends to peak based on global time zones.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-4">
+            {[
+              {
+                time: '12:00 PM – 2:00 PM UTC',
+                label: 'European Peak',
+                desc: 'Afternoon in Europe overlaps with morning in the Americas, creating a large active user base across both continents.',
+                color: 'text-yellow-400',
+              },
+              {
+                time: '6:00 PM – 10:00 PM UTC',
+                label: 'Global Prime Time',
+                desc: 'Evening in Europe, afternoon in the US East Coast, and late morning on the US West Coast. The highest overall traffic window.',
+                color: 'text-green-400',
+              },
+              {
+                time: '10:00 PM – 2:00 AM UTC',
+                label: 'Asia-Pacific Active',
+                desc: 'Morning to midday across Southeast Asia, India, and Australia. Great for connecting with people from the Asia-Pacific region.',
+                color: 'text-violet-400',
+              },
+            ].map((window) => (
+              <div key={window.label} className="bg-white/5 border border-white/5 rounded-xl p-5 text-center">
+                <p className={`text-xs font-semibold mb-1 ${window.color}`}>{window.time}</p>
+                <h3 className="font-semibold text-white mb-2">{window.label}</h3>
+                <p className="text-xs text-gray-400">{window.desc}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-gray-500 text-sm mt-4 text-center">
+            Omeelo has users online 24/7 — these are simply the highest-traffic windows for faster matching.
+          </p>
         </section>
 
         {/* Features */}
@@ -130,160 +275,35 @@ export default function VideoChatWithStrangersPage() {
             {[
               {
                 title: 'High-Definition Video',
-                desc: 'Omeelo uses WebRTC peer-to-peer technology to deliver crisp, smooth video. No grainy feeds, no stuttering. Just clear, real-time video that makes conversations feel like you are in the same room.',
+                desc: 'Omeelo uses WebRTC peer-to-peer technology to deliver crisp, smooth video. No grainy feeds, no stuttering.',
               },
               {
                 title: 'Instant Stranger Matching',
-                desc: 'Our lightweight signaling server connects you with another person in under three seconds. There is no matchmaking queue, no waiting room, and no loading animation.',
+                desc: 'Our lightweight signaling server connects you with another person in under three seconds.',
               },
               {
                 title: 'Text Chat Alongside Video',
-                desc: 'While your video call is active, you can also exchange text messages. Share links, spell out names, or type a quick note without interrupting the conversation flow.',
+                desc: 'While your video call is active, you can also exchange text messages. Share links or spell out names without interrupting the flow.',
               },
               {
                 title: 'One-Click Next Button',
-                desc: 'The conversation not working? Press Next and you are instantly paired with a different stranger. No awkward goodbyes, no waiting periods between matches.',
+                desc: 'The conversation not working? Press Next and you are instantly paired with a different stranger.',
               },
               {
                 title: 'Works on Every Device',
-                desc: 'Omeelo is fully responsive and works on desktops, laptops, tablets, and smartphones. Use Chrome, Safari, Firefox, or Edge — no app download needed.',
+                desc: 'Fully responsive on desktops, laptops, tablets, and smartphones. No app download needed.',
               },
               {
                 title: 'Zero Data Collection',
-                desc: 'Omeelo does not ask for your name, email, or any personal information. There are no accounts and no profiles. Every session is a clean slate.',
+                desc: 'Omeelo does not ask for your name, email, or any personal information. Every session is a clean slate.',
               },
             ].map((f) => (
-              <div
-                key={f.title}
-                className="bg-white/5 border border-white/5 rounded-xl p-5 hover:border-violet-500/30 transition-colors"
-              >
+              <div key={f.title} className="bg-white/5 border border-white/5 rounded-xl p-5 hover:border-violet-500/30 transition-colors">
                 <h3 className="font-semibold text-white mb-1">{f.title}</h3>
                 <p className="text-sm text-gray-400">{f.desc}</p>
               </div>
             ))}
           </div>
-        </section>
-
-        {/* Who you might meet */}
-        <section className="mb-14">
-          <h2 className="text-2xl font-bold text-white mb-4">
-            Who Will You Meet in Stranger Video Chat?
-          </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            One of the most exciting aspects of video chatting with strangers is the sheer
-            unpredictability of who you will meet next. Omeelo users come from every continent and
-            represent an incredibly diverse range of backgrounds, ages, and interests.
-          </p>
-          <div className="grid sm:grid-cols-3 gap-4 text-sm">
-            {[
-              {
-                title: 'Students',
-                desc: 'University students from Tokyo to Toronto use Omeelo to practice languages, make friends abroad, and take a break from studying.',
-              },
-              {
-                title: 'Digital Nomads',
-                desc: 'Remote workers and travelers use stranger video chat to stay socially connected while living in new cities far from home.',
-              },
-              {
-                title: 'Music &amp; Art Enthusiasts',
-                desc: 'Creative individuals share their talents, discover new artists, and find collaborators they would never encounter otherwise.',
-              },
-              {
-                title: 'Language Learners',
-                desc: 'People studying new languages seek out native speakers for immersive, real-time practice that textbooks cannot provide.',
-              },
-              {
-                title: 'Night Owls',
-                desc: 'When your friends are asleep and you are wide awake, there is always someone on the other side of the globe ready to chat.',
-              },
-              {
-                title: 'Curious Minds',
-                desc: 'Some people simply love meeting new individuals. They thrive on the randomness and the possibility of every new connection.',
-              },
-            ].map((p) => (
-              <div key={p.title} className="bg-white/5 border border-white/5 rounded-xl p-4">
-                <h3 className="font-semibold text-white mb-1">{p.title}</h3>
-                <p className="text-gray-400">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Privacy and safety */}
-        <section className="mb-14">
-          <h2 className="text-2xl font-bold text-white mb-4">
-            Privacy and Safety in Stranger Video Chat
-          </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            Video chatting with strangers requires trust in the platform you are using. Omeelo
-            earns that trust through its technical architecture and user-facing safety tools.
-          </p>
-          <div className="space-y-3">
-            {[
-              {
-                title: 'Peer-to-Peer Encrypted Streams',
-                detail: 'Your video and audio are transmitted directly between your browser and the other person using WebRTC. Omeelo servers never process, view, or store your media.',
-              },
-              {
-                title: 'No Account Means No Data Breach Risk',
-                detail: 'Since Omeelo collects zero personal information and maintains no user database, there is nothing for hackers to steal even in a theoretical breach scenario.',
-              },
-              {
-                title: 'Instant Reporting',
-                detail: 'If a stranger behaves inappropriately during your video chat, click the report button. The user is flagged for review and repeated offenders are permanently banned.',
-              },
-              {
-                title: 'You Control Every Interaction',
-                detail: 'You decide when to start, when to skip, and when to stop. There is no pressure to stay in a conversation and no penalty for leaving. You are always in charge.',
-              },
-            ].map((s) => (
-              <div key={s.title} className="bg-white/5 border border-white/5 rounded-xl p-5">
-                <h3 className="font-semibold text-white mb-1">{s.title}</h3>
-                <p className="text-sm text-gray-400">{s.detail}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Getting started */}
-        <section className="mb-14">
-          <h2 className="text-2xl font-bold text-white mb-4">
-            How to Start Video Chatting with Strangers
-          </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            You are three simple steps away from your first stranger video chat on Omeelo.
-          </p>
-          <ol className="space-y-4 text-gray-400">
-            <li className="flex gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold">
-                1
-              </span>
-              <div>
-                <strong className="text-white">Go to Omeelo</strong> — Open omeelo.com in any
-                browser on any device. Desktop, phone, or tablet — it all works.
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold">
-                2
-              </span>
-              <div>
-                <strong className="text-white">Enable Your Camera</strong> — Grant camera and
-                microphone permission when your browser asks. You will see a preview of yourself
-                before connecting.
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold">
-                3
-              </span>
-              <div>
-                <strong className="text-white">Click Start</strong> — That is it. You will be
-                connected to a random stranger within seconds. Enjoy the conversation or press Next
-                to meet someone new.
-              </div>
-            </li>
-          </ol>
         </section>
 
         {/* CTA Banner */}
@@ -307,57 +327,17 @@ export default function VideoChatWithStrangersPage() {
 
         {/* FAQ */}
         <section className="mb-14">
-          <h2 className="text-2xl font-bold text-white mb-6">
-            Stranger Video Chat FAQ
-          </h2>
+          <h2 className="text-2xl font-bold text-white mb-6">Stranger Video Chat FAQ</h2>
           <div className="space-y-4">
-            {[
-              {
-                q: 'Is video chatting with strangers on Omeelo safe?',
-                a: 'Yes. Omeelo uses peer-to-peer WebRTC connections that bypass our servers entirely, meaning your video is never seen or stored by the platform. You also have instant access to a report button and a skip button for full control over every interaction.',
-              },
-              {
-                q: 'Do I need to pay to video chat with strangers?',
-                a: 'No. Omeelo is completely free. There are no premium subscriptions, no virtual currencies, and no paywall-gated features. Every user gets the full experience at no cost.',
-              },
-              {
-                q: 'Can I video chat with strangers on my phone?',
-                a: 'Absolutely. Omeelo works in mobile browsers on both iOS and Android. No app download is needed — just open the website and start chatting.',
-              },
-              {
-                q: 'Will strangers be able to see my personal information?',
-                a: 'No. Omeelo does not display any personal information because it does not collect any. There are no usernames, no location tags, and no profile cards. You are completely anonymous.',
-              },
-              {
-                q: 'How quickly will I be matched with a stranger?',
-                a: 'Matching on Omeelo typically takes under three seconds. During peak hours with more users online, matching is even faster.',
-              },
-              {
-                q: 'What if I get matched with someone I do not want to talk to?',
-                a: 'Press the Next button. You will be disconnected from the current person and matched with a new stranger instantly. There is no limit to how many times you can skip.',
-              },
-            ].map((faq) => (
-              <details
-                key={faq.q}
-                className="bg-white/5 border border-white/5 rounded-xl group"
-              >
+            {faqSchema.mainEntity.map((faq) => (
+              <details key={faq.name} className="bg-white/5 border border-white/5 rounded-xl group">
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-medium">
-                  {faq.q}
-                  <svg
-                    className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
+                  {faq.name}
+                  <svg className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </summary>
-                <p className="px-5 pb-5 text-sm text-gray-400">{faq.a}</p>
+                <p className="px-5 pb-5 text-sm text-gray-400">{faq.acceptedAnswer.text}</p>
               </details>
             ))}
           </div>
@@ -365,9 +345,7 @@ export default function VideoChatWithStrangersPage() {
 
         {/* Internal Links */}
         <section className="mb-14">
-          <h2 className="text-lg font-semibold text-white text-center mb-6">
-            Browse Omeelo
-          </h2>
+          <h2 className="text-lg font-semibold text-white text-center mb-6">Browse Omeelo</h2>
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             {[
               { href: '/', label: 'Home' },
@@ -377,11 +355,7 @@ export default function VideoChatWithStrangersPage() {
               { href: '/talk-to-strangers', label: 'Talk to Strangers' },
               { href: '/blog', label: 'Blog' },
             ].map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="bg-white/5 border border-white/10 hover:border-violet-500/30 text-gray-400 hover:text-white px-4 py-2 rounded-lg transition-colors"
-              >
+              <Link key={link.href} href={link.href} className="bg-white/5 border border-white/10 hover:border-violet-500/30 text-gray-400 hover:text-white px-4 py-2 rounded-lg transition-colors">
                 {link.label}
               </Link>
             ))}
@@ -389,24 +363,13 @@ export default function VideoChatWithStrangersPage() {
         </section>
       </article>
 
-      {/* Footer */}
       <footer className="border-t border-white/5 py-8 text-center text-sm text-gray-500">
         <div className="flex flex-wrap justify-center gap-6 mb-4">
-          <Link href="/random-video-chat" className="hover:text-white transition-colors">
-            Random Video Chat
-          </Link>
-          <Link href="/omegle-alternative" className="hover:text-white transition-colors">
-            Omegle Alternative
-          </Link>
-          <Link href="/blog" className="hover:text-white transition-colors">
-            Blog
-          </Link>
-          <Link href="/privacy" className="hover:text-white transition-colors">
-            Privacy Policy
-          </Link>
-          <Link href="/terms" className="hover:text-white transition-colors">
-            Terms of Service
-          </Link>
+          <Link href="/random-video-chat" className="hover:text-white transition-colors">Random Video Chat</Link>
+          <Link href="/omegle-alternative" className="hover:text-white transition-colors">Omegle Alternative</Link>
+          <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
         </div>
         <div className="flex items-center justify-center gap-2 mb-4">
           <Logo size={24} />

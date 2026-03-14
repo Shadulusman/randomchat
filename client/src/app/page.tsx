@@ -6,6 +6,8 @@ import Navbar from '@/components/Navbar';
 import Logo from '@/components/Logo';
 import AvatarMarquee from '@/components/AvatarMarquee';
 import StatsCounter from '@/components/StatsCounter';
+import AdUnit from '@/components/AdUnit';
+import { AD_SLOTS } from '@/config/ads';
 
 export default function Home() {
   const [onlineCount, setOnlineCount] = useState<number | null>(null);
@@ -85,6 +87,11 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ── Ad: Mid-page ── */}
+      <section className="max-w-3xl mx-auto px-4 pb-10">
+        <AdUnit slot={AD_SLOTS.HOME_MID} format="horizontal" />
       </section>
 
       {/* ── Features ── */}
@@ -218,6 +225,11 @@ export default function Home() {
             </details>
           ))}
         </div>
+      </section>
+
+      {/* ── Ad: Bottom ── */}
+      <section className="max-w-3xl mx-auto px-4 pb-10">
+        <AdUnit slot={AD_SLOTS.HOME_BOTTOM} format="horizontal" />
       </section>
 
       {/* ── CTA Banner ── */}

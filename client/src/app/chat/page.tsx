@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { io, Socket } from 'socket.io-client';
 import Logo from '@/components/Logo';
 import ShareButton from '@/components/ShareButton';
+import AdUnit from '@/components/AdUnit';
+import { AD_SLOTS } from '@/config/ads';
 
 // ─── Constants ───────────────────────────────
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001';
@@ -361,7 +363,10 @@ export default function ChatPage() {
                 </div>
               </div>
               <p className="text-gray-300 text-sm mb-1">Looking for someone...</p>
-              <p className="text-gray-500 text-xs">This usually takes a few seconds</p>
+              <p className="text-gray-500 text-xs mb-4">This usually takes a few seconds</p>
+              <div className="w-full max-w-sm">
+                <AdUnit slot={AD_SLOTS.CHAT_WAITING} format="rectangle" />
+              </div>
             </div>
           )}
 

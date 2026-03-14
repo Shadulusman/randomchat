@@ -22,9 +22,111 @@ export const metadata: Metadata = {
   },
 };
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is it safe to talk to strangers on Omeelo?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Omeelo is designed with safety as a priority. Your video is never recorded, no personal data is collected, and you can report or skip any user with a single click. Always exercise personal caution and avoid sharing sensitive information.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do I need to sign up to talk to strangers?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Omeelo requires zero registration. Open the website, allow camera access, and start chatting immediately.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I talk to strangers from specific countries?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Currently, Omeelo uses fully random matching without geographic filters. This means you could be connected to anyone from any country, which is part of what makes the experience exciting.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is talking to strangers on Omeelo free?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes, completely free. There are no charges, no premium upgrades, and no coin-based systems. Every feature is accessible to all users at no cost.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What if I do not want to show my face?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'You can choose to keep your camera off and communicate through the text chat feature instead. However, video conversations tend to create stronger connections.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I end a conversation with a stranger?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Press the Next button to immediately disconnect from the current person and be matched with someone new. You can also close the browser tab to exit entirely.',
+      },
+    },
+  ],
+};
+
+const conversationStarters = [
+  {
+    category: 'Icebreakers',
+    starters: [
+      'If you could have dinner with anyone alive or dead, who would it be?',
+      'What is the most interesting thing that happened to you this week?',
+      'If you could instantly learn any skill, what would you choose?',
+      'What is a movie or show you have watched more than three times?',
+      'What would you do with a completely free day tomorrow?',
+    ],
+  },
+  {
+    category: 'Deep Questions',
+    starters: [
+      'What is something you believe that most people around you do not?',
+      'What has been the biggest turning point in your life so far?',
+      'What does success look like to you personally?',
+      'If you could change one thing about how the world works, what would it be?',
+      'What is something you wish people understood about you?',
+    ],
+  },
+  {
+    category: 'Fun & Lighthearted',
+    starters: [
+      'What is the strangest food you have ever tried?',
+      'If you had to describe your personality as a weather pattern, what would it be?',
+      'What superpower would be most useful in everyday life?',
+      'What is the most embarrassing thing you are willing to admit right now?',
+      'If your life were a TV show, what genre would it be?',
+    ],
+  },
+  {
+    category: 'Cultural Exchange',
+    starters: [
+      'What is a tradition in your country that outsiders would find surprising?',
+      'What is a food from your culture that everyone should try?',
+      'How do people typically spend a weekend where you are from?',
+      'What is something about your hometown that you miss when you travel?',
+      'What is a common misconception people have about your country?',
+    ],
+  },
+];
+
 export default function TalkToStrangersPage() {
   return (
     <main className="min-h-screen bg-[#0a0a0f]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Navbar />
 
       <article className="max-w-4xl mx-auto px-4 pt-28 pb-20">
@@ -61,9 +163,9 @@ export default function TalkToStrangersPage() {
           <p className="text-gray-400 leading-relaxed mb-4">
             Research in behavioral science has consistently shown that conversations with strangers
             tend to be more enjoyable and meaningful than people expect. We overestimate the
-            awkwardness and underestimate the reward. Platforms like Omeelo lower the barrier even
-            further by removing the need for introductions, profiles, or small talk about who you
-            are.
+            awkwardness and underestimate the reward. A University of Chicago study found that
+            commuters who talked to strangers reported significantly higher positive emotions than
+            those who sat in silence — even though they predicted the opposite beforehand.
           </p>
           <p className="text-gray-400 leading-relaxed">
             Whether you want to practice a language, learn about another culture, fight boredom, or
@@ -84,7 +186,7 @@ export default function TalkToStrangersPage() {
                 desc: 'When you talk to people from different backgrounds, you gain insights that books and documentaries cannot provide. Every stranger carries a unique life story.',
               },
               {
-                title: 'Build Confidence',
+                title: 'Build Social Confidence',
                 desc: 'Initiating conversations with unknown people strengthens your social skills and reduces the anxiety that comes with meeting new people in real life.',
               },
               {
@@ -115,136 +217,91 @@ export default function TalkToStrangersPage() {
           </div>
         </section>
 
-        {/* How Omeelo works for talking to strangers */}
+        {/* Conversation Starters */}
         <section className="mb-14">
           <h2 className="text-2xl font-bold text-white mb-4">
-            How Omeelo Helps You Talk to Strangers
+            20 Conversation Starters for Talking to Strangers
           </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            Omeelo removes every friction point between you and a conversation with a stranger. Here
-            is how the experience works from start to finish.
+          <p className="text-gray-400 leading-relaxed mb-6">
+            Not sure what to say when you first connect? Use these proven conversation starters to
+            break the ice immediately. Grouped by mood so you can pick the right tone.
           </p>
-          <ol className="space-y-4 text-gray-400">
-            <li className="flex gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold">
-                1
-              </span>
-              <div>
-                <strong className="text-white">No Barriers to Entry</strong> — There are no
-                accounts, no forms, and no downloads. You visit omeelo.com and you are ready. This
-                is intentional. The fewer steps between you and a conversation, the more likely you
-                are to have one.
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold">
-                2
-              </span>
-              <div>
-                <strong className="text-white">Truly Random Matching</strong> — Omeelo pairs you
-                with a completely random person. There are no algorithms trying to guess your
-                preferences. This randomness is the magic — it creates encounters that would never
-                happen through curated matching.
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold">
-                3
-              </span>
-              <div>
-                <strong className="text-white">Video Plus Text</strong> — You can chat face-to-face
-                through live video while also sending text messages. This dual-channel approach
-                makes conversations richer and gives you flexibility in how you communicate.
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold">
-                4
-              </span>
-              <div>
-                <strong className="text-white">Skip Without Guilt</strong> — If the conversation is
-                not working out, press Next. There is no social penalty, no notification to the
-                other person, and no hard feelings. You will be matched with someone new in seconds.
-              </div>
-            </li>
-          </ol>
-        </section>
-
-        {/* Tips for talking to strangers */}
-        <section className="mb-14">
-          <h2 className="text-2xl font-bold text-white mb-4">
-            Tips for Great Conversations with Strangers
-          </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            Talking to strangers is a skill, and like any skill, it improves with practice. Here
-            are some tips to make your conversations on Omeelo more enjoyable and memorable.
-          </p>
-          <div className="space-y-3">
-            {[
-              {
-                tip: 'Start with a Genuine Greeting',
-                detail: 'A simple, warm hello goes a long way. Smile, wave, and introduce yourself naturally. First impressions set the tone for the entire conversation.',
-              },
-              {
-                tip: 'Ask Open-Ended Questions',
-                detail: 'Instead of yes-or-no questions, ask things like "What is the most interesting thing that happened to you this week?" Open questions invite storytelling and create deeper exchanges.',
-              },
-              {
-                tip: 'Share Something About Yourself',
-                detail: 'Conversations are a two-way street. Offering a piece of your own story encourages the other person to open up as well.',
-              },
-              {
-                tip: 'Be Respectful and Patient',
-                detail: 'Remember that the person on the other side is also a stranger to you. Treat them with the same respect you would want in return. Language barriers may exist, so patience is key.',
-              },
-              {
-                tip: 'Know When to Move On',
-                detail: 'Not every conversation will click, and that is perfectly normal. If the energy is not there, gracefully press Next and try again. The next great conversation is always one click away.',
-              },
-            ].map((t) => (
-              <div key={t.tip} className="bg-white/5 border border-white/5 rounded-xl p-5">
-                <h3 className="font-semibold text-white mb-1">{t.tip}</h3>
-                <p className="text-sm text-gray-400">{t.detail}</p>
+          <div className="space-y-6">
+            {conversationStarters.map((group) => (
+              <div key={group.category}>
+                <h3 className="text-sm font-semibold text-violet-400 uppercase tracking-wider mb-3">
+                  {group.category}
+                </h3>
+                <div className="space-y-2">
+                  {group.starters.map((starter) => (
+                    <div
+                      key={starter}
+                      className="flex items-start gap-3 bg-white/5 border border-white/5 rounded-lg px-4 py-3"
+                    >
+                      <span className="text-violet-400 mt-0.5 flex-shrink-0">&#8220;</span>
+                      <p className="text-sm text-gray-300">{starter}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Safety when talking to strangers */}
+        {/* How Omeelo works */}
+        <section className="mb-14">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            How Omeelo Helps You Talk to Strangers
+          </h2>
+          <ol className="space-y-4 text-gray-400">
+            {[
+              {
+                label: 'No Barriers to Entry',
+                desc: 'There are no accounts, no forms, and no downloads. Visit omeelo.com and you are ready. The fewer steps between you and a conversation, the more likely you are to have one.',
+              },
+              {
+                label: 'Truly Random Matching',
+                desc: 'Omeelo pairs you with a completely random person. No algorithms guessing your preferences. This randomness creates encounters that would never happen through curated matching.',
+              },
+              {
+                label: 'Video Plus Text',
+                desc: 'Chat face-to-face through live video while also sending text messages. This dual-channel approach makes conversations richer and more flexible.',
+              },
+              {
+                label: 'Skip Without Guilt',
+                desc: 'If the conversation is not working out, press Next. No social penalty, no notification to the other person. You will be matched with someone new in seconds.',
+              },
+            ].map((step, i) => (
+              <li key={step.label} className="flex gap-3">
+                <span className="flex-shrink-0 w-8 h-8 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center font-bold">
+                  {i + 1}
+                </span>
+                <div>
+                  <strong className="text-white">{step.label}</strong> — {step.desc}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Safety */}
         <section className="mb-14">
           <h2 className="text-2xl font-bold text-white mb-4">
             Staying Safe When You Talk to Strangers Online
           </h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
-            Omeelo provides tools and architecture to protect your safety, but being mindful of
-            personal boundaries is always important when interacting with unknown individuals.
-          </p>
           <ul className="space-y-2 text-gray-400 text-sm">
-            <li className="flex items-start gap-2">
-              <span className="text-green-400 mt-0.5">&#10003;</span>
-              Keep personal details private. Never share your full name, home address, workplace,
-              school, or financial information.
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-green-400 mt-0.5">&#10003;</span>
-              Use the report button immediately if someone behaves inappropriately or makes you
-              uncomfortable.
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-green-400 mt-0.5">&#10003;</span>
-              Remember that you are always in control. You can end any conversation instantly by
-              pressing Next or closing the tab.
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-green-400 mt-0.5">&#10003;</span>
-              Omeelo uses peer-to-peer video that is never recorded or stored. Your privacy is
-              protected at the platform level.
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-green-400 mt-0.5">&#10003;</span>
-              Be cautious of anyone who asks you to move the conversation to another platform or
-              share links.
-            </li>
+            {[
+              'Keep personal details private. Never share your full name, home address, workplace, school, or financial information.',
+              'Use the report button immediately if someone behaves inappropriately or makes you uncomfortable.',
+              'Remember that you are always in control. End any conversation instantly by pressing Next or closing the tab.',
+              'Omeelo uses peer-to-peer video that is never recorded or stored. Your privacy is protected at the platform level.',
+              'Be cautious of anyone who asks you to move the conversation to another platform or share links.',
+            ].map((tip) => (
+              <li key={tip} className="flex items-start gap-2">
+                <span className="text-green-400 mt-0.5">&#10003;</span>
+                {tip}
+              </li>
+            ))}
           </ul>
         </section>
 
@@ -273,53 +330,23 @@ export default function TalkToStrangersPage() {
             Frequently Asked Questions About Talking to Strangers
           </h2>
           <div className="space-y-4">
-            {[
-              {
-                q: 'Is it safe to talk to strangers on Omeelo?',
-                a: 'Omeelo is designed with safety as a priority. Your video is never recorded, no personal data is collected, and you can report or skip any user with a single click. However, you should always exercise personal caution and avoid sharing sensitive information.',
-              },
-              {
-                q: 'Do I need to sign up to talk to strangers?',
-                a: 'No. Omeelo requires zero registration. Open the website, allow camera access, and start chatting immediately.',
-              },
-              {
-                q: 'Can I talk to strangers from specific countries?',
-                a: 'Currently, Omeelo uses fully random matching without geographic filters. This means you could be connected to anyone from any country, which is part of what makes the experience exciting.',
-              },
-              {
-                q: 'Is talking to strangers on Omeelo free?',
-                a: 'Yes, completely free. There are no charges, no premium upgrades, and no coin-based systems. Every feature is accessible to all users at no cost.',
-              },
-              {
-                q: 'What if I do not want to show my face?',
-                a: 'While Omeelo is primarily a video chat platform, you can choose to keep your camera off and communicate through the text chat feature instead. However, video conversations tend to create stronger connections.',
-              },
-              {
-                q: 'How do I end a conversation with a stranger?',
-                a: 'Press the Next button to immediately disconnect from the current person and be matched with someone new. You can also close the browser tab to exit entirely.',
-              },
-            ].map((faq) => (
+            {faqSchema.mainEntity.map((faq) => (
               <details
-                key={faq.q}
+                key={faq.name}
                 className="bg-white/5 border border-white/5 rounded-xl group"
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-medium">
-                  {faq.q}
+                  {faq.name}
                   <svg
                     className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </summary>
-                <p className="px-5 pb-5 text-sm text-gray-400">{faq.a}</p>
+                <p className="px-5 pb-5 text-sm text-gray-400">{faq.acceptedAnswer.text}</p>
               </details>
             ))}
           </div>
@@ -327,9 +354,7 @@ export default function TalkToStrangersPage() {
 
         {/* Internal Links */}
         <section className="mb-14">
-          <h2 className="text-lg font-semibold text-white text-center mb-6">
-            Explore Omeelo
-          </h2>
+          <h2 className="text-lg font-semibold text-white text-center mb-6">Explore Omeelo</h2>
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             {[
               { href: '/', label: 'Home' },
@@ -351,24 +376,13 @@ export default function TalkToStrangersPage() {
         </section>
       </article>
 
-      {/* Footer */}
       <footer className="border-t border-white/5 py-8 text-center text-sm text-gray-500">
         <div className="flex flex-wrap justify-center gap-6 mb-4">
-          <Link href="/random-video-chat" className="hover:text-white transition-colors">
-            Random Video Chat
-          </Link>
-          <Link href="/omegle-alternative" className="hover:text-white transition-colors">
-            Omegle Alternative
-          </Link>
-          <Link href="/blog" className="hover:text-white transition-colors">
-            Blog
-          </Link>
-          <Link href="/privacy" className="hover:text-white transition-colors">
-            Privacy Policy
-          </Link>
-          <Link href="/terms" className="hover:text-white transition-colors">
-            Terms of Service
-          </Link>
+          <Link href="/random-video-chat" className="hover:text-white transition-colors">Random Video Chat</Link>
+          <Link href="/omegle-alternative" className="hover:text-white transition-colors">Omegle Alternative</Link>
+          <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
         </div>
         <div className="flex items-center justify-center gap-2 mb-4">
           <Logo size={24} />

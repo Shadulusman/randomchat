@@ -1,0 +1,13 @@
+{
+  "name": "randomchat-loadtest",
+  "version": "1.0.0",
+  "description": "Load test for Omeelo signaling server - 10k concurrent users",
+  "scripts": {
+    "smoke":  "node loadtest.js --users 50   --ramp 10",
+    "load":   "node loadtest.js --users 10000 --ramp 120",
+    "stress": "node loadtest.js --users 20000 --ramp 300"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.4"
+  }
+}

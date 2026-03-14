@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Logo from '@/components/Logo';
 import { blogPosts } from '@/data/blog-posts';
+import AdUnit from '@/components/AdUnit';
+import { AD_SLOTS } from '@/config/ads';
 
 export const metadata: Metadata = {
   title: 'Blog | Omeelo - Random Video Chat Tips & Guides',
@@ -27,6 +29,11 @@ export default function BlogPage() {
           Tips, guides, and insights about random video chat, online safety, and
           making meaningful connections with strangers around the world.
         </p>
+      </section>
+
+      {/* Ad: Blog top */}
+      <section className="max-w-3xl mx-auto px-4 pb-10">
+        <AdUnit slot={AD_SLOTS.BLOG} format="horizontal" />
       </section>
 
       {/* Blog Grid */}
