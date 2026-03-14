@@ -114,6 +114,8 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#7c3aed" />
+        {/* Monetag */}
+        <meta name="monetag" content="64a30975a0c44d0e44935daed8eb2717" />
         {/* Google AdSense */}
         <script
           async
