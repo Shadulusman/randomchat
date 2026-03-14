@@ -1,3 +1,12 @@
+// ─── PropellerAds ─────────────────────────────────────────────────────────────
+// To get your zone ID:
+//   1. Sign up free at https://publishers.propellerads.com
+//   2. Go to Sites → Add Site → enter omeelo.com
+//   3. Choose "Push Notifications" as the ad format
+//   4. Copy the numeric Zone ID (e.g. 4912345)
+//   5. Replace the string below with your real zone ID
+export const PROPELLER_ZONE_ID = 'YOUR_ZONE_ID';
+
 // ─── AdSense Slot IDs ─────────────────────────────────────────────────────────
 // To get these:
 //   1. Go to https://adsense.google.com

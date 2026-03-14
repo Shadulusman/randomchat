@@ -3,6 +3,7 @@ import { Nunito } from 'next/font/google';
 import './globals.css';
 import AgeVerification from '@/components/AgeVerification';
 import { Analytics } from '@vercel/analytics/react';
+import PropellerAds from '@/components/PropellerAds';
 
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 
@@ -132,6 +133,7 @@ export default function RootLayout({
         <AgeVerification />
         {children}
         <Analytics />
+        <PropellerAds />
       </body>
     </html>
   );
