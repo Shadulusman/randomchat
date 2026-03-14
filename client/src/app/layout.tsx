@@ -116,6 +116,8 @@ export default function RootLayout({
         <meta name="theme-color" content="#7c3aed" />
         {/* Monetag */}
         <meta name="monetag" content="64a30975a0c44d0e44935daed8eb2717" />
+        {/* Monetag Push Notifications */}
+        <script src="https://5gvci.com/act/files/tag.min.js?z=10732010" data-cfasync="false" async />
         {/* Google AdSense */}
         <script
           async
