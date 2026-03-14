@@ -6,7 +6,7 @@ import { PROPELLER_ZONE_ID } from '@/config/ads';
 export default function PropellerAds() {
   useEffect(() => {
     // Skip if zone ID hasn't been configured yet
-    if (!PROPELLER_ZONE_ID || PROPELLER_ZONE_ID === 'YOUR_ZONE_ID') return;
+    if (!PROPELLER_ZONE_ID) return;
 
     // Register service worker required for push notifications
     if ('serviceWorker' in navigator) {
