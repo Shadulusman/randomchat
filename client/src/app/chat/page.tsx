@@ -72,6 +72,7 @@ export default function ChatPage() {
 
   // ─── Camera ────────────────────────────────
   const startCamera = useCallback(async () => {
+    setCameraError(null);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
@@ -81,12 +82,16 @@ export default function ChatPage() {
       if (localVideoRef.current) {
         localVideoRef.current.srcObject = stream;
       }
-      setCameraError(null);
       return stream;
-    } catch {
-      setCameraError(
-        'Could not access your camera or microphone. Please allow access and reload.'
-      );
+    } catch (err: unknown) {
+      const name = err instanceof DOMException ? err.name : '';
+      if (name === 'NotAllowedError' || name === 'PermissionDeniedError') {
+        setCameraError('Camera access denied. Please allow camera/microphone in Safari preferences and try again.');
+      } else if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
+        setCameraError('No camera or microphone found on this device.');
+      } else {
+        setCameraError('Could not access your camera or microphone. Please allow access and try again.');
+      }
       return null;
     }
   }, []);
@@ -239,15 +244,9 @@ export default function ChatPage() {
     };
   }, [createPeer, closePeer]);
 
-  useEffect(() => {
-    startCamera();
-    return () => {
-      localStreamRef.current?.getTracks().forEach((t) => t.stop());
-    };
-  }, [startCamera]);
-
   // ─── Actions ───────────────────────────────
   const findMatch = async () => {
+    // Always request camera on user gesture — required by Safari
     if (!localStreamRef.current) {
       const stream = await startCamera();
       if (!stream) return;
@@ -374,8 +373,7 @@ export default function ChatPage() {
               <p className="text-gray-400 text-sm mb-3">No partner connected</p>
               <button
                 onClick={findMatch}
-                disabled={!!cameraError}
-                className="bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all hover:scale-105 flex items-center gap-2"
+                className="bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all hover:scale-105 flex items-center gap-2"
               >
                 Start Matching
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
