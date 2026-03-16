@@ -247,7 +247,11 @@ export default function ChatPage() {
   }, [startCamera]);
 
   // ─── Actions ───────────────────────────────
-  const findMatch = () => {
+  const findMatch = async () => {
+    if (!localStreamRef.current) {
+      const stream = await startCamera();
+      if (!stream) return;
+    }
     socketRef.current?.emit('find-match');
     setStatus('waiting');
   };
