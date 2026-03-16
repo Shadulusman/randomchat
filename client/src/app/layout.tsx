@@ -109,6 +109,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: `(function(s){s.dataset.zone='10740351',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))` }} />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -116,6 +117,8 @@ export default function RootLayout({
         <meta name="theme-color" content="#7c3aed" />
         {/* Monetag */}
         <meta name="monetag" content="64a30975a0c44d0e44935daed8eb2717" />
+        {/* Monetag Push Notifications */}
+        <script src="https://5gvci.com/act/files/tag.min.js?z=10732010" data-cfasync="false" async />
         {/* Google AdSense */}
         <script
           async

@@ -157,8 +157,8 @@ function tryMatch(socketId) {
 
     // Only avoid recent partners when there are enough people online
     if (queueSize >= 5) {
-      if (userData.recentPartners.has(candidateId)) continue;
-      if (candidateData.recentPartners.has(socketId)) continue;
+      if (userData.recentPartners.includes(candidateId)) continue;
+      if (candidateData.recentPartners.includes(socketId)) continue;
     }
 
     // ── Match found ──
