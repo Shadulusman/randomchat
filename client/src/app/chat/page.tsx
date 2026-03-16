@@ -159,7 +159,7 @@ export default function ChatPage() {
 
   // ─── Socket Setup ──────────────────────────
   useEffect(() => {
-    const socket = io(SERVER_URL);
+    const socket = io(SERVER_URL, { transports: ['websocket'] });
     socketRef.current = socket;
 
     socket.on('waiting', () => setStatus('waiting'));
