@@ -124,6 +124,19 @@ export default function ChatPage() {
         }
       };
 
+      pc.onconnectionstatechange = () => {
+        if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected') {
+          closePeer();
+          setStatus('disconnected');
+        }
+      };
+
+      pc.oniceconnectionstatechange = () => {
+        if (pc.iceConnectionState === 'failed') {
+          pc.restartIce();
+        }
+      };
+
       if (initiator) {
         pc.createOffer()
           .then((offer) => pc.setLocalDescription(offer))
@@ -132,6 +145,10 @@ export default function ChatPage() {
               to: partnerId,
               offer: pc.localDescription,
             });
+          })
+          .catch(() => {
+            closePeer();
+            setStatus('disconnected');
           });
       }
 
@@ -158,20 +175,36 @@ export default function ChatPage() {
     socket.on('offer', async ({ from, offer }) => {
       const pc = pcRef.current;
       if (!pc) return;
-      await pc.setRemoteDescription(new RTCSessionDescription(offer));
-      const answer = await pc.createAnswer();
-      await pc.setLocalDescription(answer);
-      socket.emit('answer', { to: from, answer: pc.localDescription });
+      try {
+        await pc.setRemoteDescription(new RTCSessionDescription(offer));
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+        socket.emit('answer', { to: from, answer: pc.localDescription });
+      } catch {
+        closePeer();
+        setStatus('disconnected');
+      }
     });
 
     socket.on('answer', async ({ answer }) => {
-      await pcRef.current?.setRemoteDescription(
-        new RTCSessionDescription(answer)
-      );
+      try {
+        await pcRef.current?.setRemoteDescription(
+          new RTCSessionDescription(answer)
+        );
+      } catch {
+        closePeer();
+        setStatus('disconnected');
+      }
     });
 
     socket.on('ice-candidate', async ({ candidate }) => {
-      await pcRef.current?.addIceCandidate(new RTCIceCandidate(candidate));
+      try {
+        if (pcRef.current?.remoteDescription) {
+          await pcRef.current.addIceCandidate(new RTCIceCandidate(candidate));
+        }
+      } catch {
+        // Ignore invalid ICE candidates
+      }
     });
 
     socket.on('chat-message', ({ message }) => {
