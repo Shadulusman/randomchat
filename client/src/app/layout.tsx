@@ -119,6 +119,8 @@ export default function RootLayout({
         {/* Monetag Push Notifications */}
         <script src="https://5gvci.com/act/files/tag.min.js?z=10732010" data-cfasync="false" async />
         <script src="https://5gvci.com/act/files/tag.min.js?z=10759939" data-cfasync="false" async />
+        {/* Monetag In-Page Push (Surprising tag) */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(s){s.dataset.zone='10759940',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))` }} />
         {/* Google AdSense */}
         <script
           async
