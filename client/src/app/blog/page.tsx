@@ -13,6 +13,26 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://omeelo.com/blog',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  openGraph: {
+    title: 'Blog | Omeelo - Random Video Chat Tips & Guides',
+    description:
+      'Tips, guides, and insights about random video chat, online safety, and making meaningful connections with strangers worldwide.',
+    url: 'https://omeelo.com/blog',
+    siteName: 'Omeelo',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | Omeelo - Random Video Chat Tips & Guides',
+    description:
+      'Tips, guides, and insights about random video chat, online safety, and making meaningful connections with strangers worldwide.',
+  },
 };
 
 export default function BlogPage() {

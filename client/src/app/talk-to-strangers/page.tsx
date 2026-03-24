@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://omeelo.com/talk-to-strangers',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
 };
 
 const faqSchema = {
