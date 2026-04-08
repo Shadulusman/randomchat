@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://omeelo.com/talk-to-strangers',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
 };
 
 const faqSchema = {
@@ -381,6 +386,8 @@ export default function TalkToStrangersPage() {
           <Link href="/random-video-chat" className="hover:text-white transition-colors">Random Video Chat</Link>
           <Link href="/omegle-alternative" className="hover:text-white transition-colors">Omegle Alternative</Link>
           <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+          <Link href="/about" className="hover:text-white transition-colors">About</Link>
+          <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
           <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
           <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
         </div>

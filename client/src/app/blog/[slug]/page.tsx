@@ -26,6 +26,11 @@ export function generateMetadata({
     alternates: {
       canonical: `https://omeelo.com/blog/${post.slug}`,
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true },
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -72,6 +77,7 @@ export default function BlogPostPage({
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
+    dateModified: post.date,
     author: {
       '@type': 'Organization',
       name: 'Omeelo',
@@ -197,6 +203,12 @@ export default function BlogPostPage({
           </Link>
           <Link href="/blog" className="hover:text-white transition-colors">
             Blog
+          </Link>
+          <Link href="/about" className="hover:text-white transition-colors">
+            About
+          </Link>
+          <Link href="/contact" className="hover:text-white transition-colors">
+            Contact
           </Link>
           <Link href="/privacy" className="hover:text-white transition-colors">
             Privacy Policy
