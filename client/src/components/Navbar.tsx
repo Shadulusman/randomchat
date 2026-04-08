@@ -23,8 +23,11 @@ export default function Navbar() {
           <Link href="/blog" className="hover:text-white transition-colors">
             Blog
           </Link>
-          <Link href="/privacy" className="hover:text-white transition-colors">
-            Privacy
+          <Link href="/about" className="hover:text-white transition-colors">
+            About
+          </Link>
+          <Link href="/contact" className="hover:text-white transition-colors">
+            Contact
           </Link>
           <Link
             href="/chat"
@@ -55,7 +58,8 @@ export default function Navbar() {
         <div className="md:hidden bg-[#0a0a0f]/95 backdrop-blur-md border-b border-white/5 px-4 pb-4 space-y-3 text-sm">
           <Link href="/omegle-alternative" className="block text-gray-400 hover:text-white py-1" onClick={() => setMenuOpen(false)}>Omegle Alternative</Link>
           <Link href="/blog" className="block text-gray-400 hover:text-white py-1" onClick={() => setMenuOpen(false)}>Blog</Link>
-          <Link href="/privacy" className="block text-gray-400 hover:text-white py-1" onClick={() => setMenuOpen(false)}>Privacy</Link>
+          <Link href="/about" className="block text-gray-400 hover:text-white py-1" onClick={() => setMenuOpen(false)}>About</Link>
+          <Link href="/contact" className="block text-gray-400 hover:text-white py-1" onClick={() => setMenuOpen(false)}>Contact</Link>
           <Link href="/chat" className="block bg-violet-600 text-white text-center px-4 py-2 rounded-lg" onClick={() => setMenuOpen(false)}>Start Chat</Link>
         </div>
       )}

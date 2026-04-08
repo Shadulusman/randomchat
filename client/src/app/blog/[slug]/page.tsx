@@ -204,6 +204,12 @@ export default function BlogPostPage({
           <Link href="/blog" className="hover:text-white transition-colors">
             Blog
           </Link>
+          <Link href="/about" className="hover:text-white transition-colors">
+            About
+          </Link>
+          <Link href="/contact" className="hover:text-white transition-colors">
+            Contact
+          </Link>
           <Link href="/privacy" className="hover:text-white transition-colors">
             Privacy Policy
           </Link>
