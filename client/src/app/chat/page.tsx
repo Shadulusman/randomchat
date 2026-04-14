@@ -399,14 +399,6 @@ export default function ChatPage() {
               </div>
               <p className="text-gray-300 text-sm mb-1">Looking for someone...</p>
               <p className="text-gray-500 text-xs mb-4">This usually takes a few seconds</p>
-              <a
-                href="https://omg10.com/4/10759978"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-violet-400 hover:text-violet-300 text-xs underline mb-4 transition-colors"
-              >
-                Check out something cool while you wait
-              </a>
               <div className="w-full max-w-sm">
                 <AdUnit slot={AD_SLOTS.CHAT_WAITING} format="rectangle" />
               </div>
@@ -426,14 +418,6 @@ export default function ChatPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
-              <a
-                href="https://omg10.com/4/10759978"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-violet-400 hover:text-violet-300 text-xs underline mt-4 transition-colors"
-              >
-                Discover something interesting
-              </a>
             </div>
           )}
         </div>
