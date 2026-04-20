@@ -3,6 +3,7 @@ import { Nunito } from 'next/font/google';
 import './globals.css';
 import AgeVerification from '@/components/AgeVerification';
 import { Analytics } from '@vercel/analytics/react';
+import PropellerAds from '@/components/PropellerAds';
 
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 
@@ -113,6 +114,13 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#7c3aed" />
+        {/* Monetag */}
+        <meta name="monetag" content="64a30975a0c44d0e44935daed8eb2717" />
+        {/* Monetag Push Notifications */}
+        <script src="https://5gvci.com/act/files/tag.min.js?z=10732010" data-cfasync="false" async />
+        <script src="https://5gvci.com/act/files/tag.min.js?z=10759939" data-cfasync="false" async />
+        {/* Monetag In-Page Push */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(s){s.dataset.zone='10759940',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))` }} />
         {/* Google AdSense */}
         <script
           async
@@ -132,6 +140,7 @@ export default function RootLayout({
         <AgeVerification />
         {children}
         <Analytics />
+        <PropellerAds />
       </body>
     </html>
   );
