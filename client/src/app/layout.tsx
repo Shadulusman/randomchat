@@ -121,6 +121,10 @@ export default function RootLayout({
         <script src="https://5gvci.com/act/files/tag.min.js?z=10759939" data-cfasync="false" async />
         {/* Monetag In-Page Push */}
         <script dangerouslySetInnerHTML={{ __html: `(function(s){s.dataset.zone='10759940',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))` }} />
+        {/* Adsterra Popunder */}
+        <script src="https://pl29213420.profitablecpmratenetwork.com/bc/2a/3b/bc2a3b2e695cf1e373cfc3d950745eae.js" async />
+        {/* Adsterra Social Bar */}
+        <script src="https://pl29213421.profitablecpmratenetwork.com/4c/e0/50/4ce0508ad02f0134ead1c86dd06e27b0.js" async />
         {/* Google AdSense */}
         <script
           async
