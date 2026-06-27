@@ -116,6 +116,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#7c3aed" />
         {/* JuicyAds */}
         <meta name="juicyads-site-verification" content="52e8549020fa117aea2e7ca5998f390a" />
+        <script type="text/javascript" data-cfasync="false" async src="https://poweredby.jads.co/js/jads.js" />
         {/* Monetag */}
         <meta name="monetag" content="64a30975a0c44d0e44935daed8eb2717" />
         {/* Monetag Push Notifications */}

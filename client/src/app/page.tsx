@@ -7,6 +7,7 @@ import Logo from '@/components/Logo';
 import AvatarMarquee from '@/components/AvatarMarquee';
 import StatsCounter from '@/components/StatsCounter';
 import AdUnit from '@/components/AdUnit';
+import JuicyAdsUnit from '@/components/JuicyAdsUnit';
 import { AD_SLOTS } from '@/config/ads';
 
 export default function Home() {
@@ -92,6 +93,11 @@ export default function Home() {
       {/* ── Ad: Mid-page ── */}
       <section className="max-w-3xl mx-auto px-4 pb-10">
         <AdUnit slot={AD_SLOTS.HOME_MID} format="horizontal" />
+      </section>
+
+      {/* ── Ad: JuicyAds ── */}
+      <section className="max-w-3xl mx-auto px-4 pb-10 flex justify-center">
+        <JuicyAdsUnit zoneId={1120804} width={728} height={90} />
       </section>
 
       {/* ── Features ── */}
